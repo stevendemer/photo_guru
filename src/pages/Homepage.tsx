@@ -2,6 +2,7 @@ import PhotoGrid from "components/PhotoGrid";
 import { fetchPhotos } from "utils/fetchPhotos";
 import { useQuery } from "react-query";
 import { IPhoto } from "shared/IPhoto";
+import Image from "components/Image";
 
 const Homepage = () => {
   const { status, data, error } = useQuery({
@@ -21,10 +22,10 @@ const Homepage = () => {
     <div className="px-4 py-8 sm:w-full">
       <PhotoGrid>
         {data?.map((post) => (
-          <div className="py-4 cursor-pointer sm:w-full">
-            <img
-              className="rounded-md shadow-2xl inset-10"
-              src={post.urls?.regular}
+          <div className="py-4 px-2 min-w-full " key={post.id}>
+            <Image
+              author={post.user.name}
+              url={post.urls?.regular}
               alt={post.alt_description}
             />
           </div>

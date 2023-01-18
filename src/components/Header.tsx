@@ -14,21 +14,38 @@ const Header = () => {
   return (
     <div className="sm:w-full bg-indigo-700">
       <div className="container mx-auto py-4 flex items-center justify-center">
-        <div className="text-sm text-gray-100 lg:text-xl font-body whitespace-nowrap">
-          Welcome to Photo Smash
+        <div className="sm:text-lg text-gray-100 ml-2 text-xs font-body whitespace-nowrap ">
+          Photo Smash
         </div>
-        <div className="flex items-center mx-auto sm:justify-center space-x-4">
+        <div className="flex md:hidden px-20 text-slate-50">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-4 h-4 text-slate-50 mx-auto cursor-pointer"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
+            />
+          </svg>
+        </div>
+
+        <div className="sm:flex items-center mx-auto sm:justify-center space-x-4 hidden">
           {routes.map((route, idx) => (
             <Link
               to={route.route}
               key={idx}
-              className="rounded-lg py-2 px-4 text-gray-50 hover:bg-slate-200 hover:text-slate-800 space-x-2 transition-colors duration-300"
+              className="rounded-lg py-2 px-4 text-gray-50 hover:bg-slate-200 hover:text-slate-800 space-x-2 transition-colors duration-300 lg:text-lg text-xs"
             >
               {route.title}
             </Link>
           ))}
         </div>
-        <span className="flex flex-row bg-slate-50 items-center justify-around mx-auto rounded-md">
+        <span className="md:flex flex-row bg-slate-50 items-center justify-around mx-auto rounded-md hidden ">
           <input
             type="text"
             placeholder="Search for a photo"
