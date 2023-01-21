@@ -27,3 +27,8 @@ export const fetchRandom = async (): Promise<any> => {
   const resp = await axios.get("photos/random");
   return resp.data;
 };
+
+export const fetchTopics = async (): Promise<any> => {
+  const resp = await axios.get("topics/?per_page=10");
+  return resp.data;
+};

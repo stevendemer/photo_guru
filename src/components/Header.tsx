@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import React, { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useQueries, useQuery } from "react-query";
 import { searchPhoto } from "utils/fetchPhotos";
 import { IPhoto } from "../shared/IPhoto";
+import { fetchTopics } from "../utils/fetchPhotos";
+import { ITopic } from "../shared/ITopic";
+import Carousel from "./Carousel";
 
 const routes = [
   {
@@ -18,27 +21,41 @@ const routes = [
 const Header = () => {
   const [query, setQuery] = useState<string>("");
 
-  const { status, data, error, refetch } = useQuery<IPhoto[], Error>(
-    ["search_photos", query],
-    async () => searchPhoto(query),
-    { enabled: Boolean(query) }
-  );
-
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
-
-  if (status === "error") {
-    return <div>{error.message}</div>;
-  }
+  const [photosQuery, topicsQuery] = useQueries([
+    {
+      queryKey: ["photos_query", query],
+      queryFn: async () => searchPhoto(query),
+      enabled: Boolean(query),
+    },
+    {
+      queryKey: ["categories"],
+      queryFn: fetchTopics,
+    },
+  ]);
 
   useEffect(() => {
-    refetch();
+    photosQuery.refetch();
   }, [query]);
 
+  if (photosQuery.isLoading) {
+    return <div>Photos loading...</div>;
+  }
+
+  if (topicsQuery.isLoading) {
+    return <div>Topics loading...</div>;
+  }
+
+  // if (topicsQuery.isError) {
+  //   return <div>{topicsQuery.error.message}</div>;
+  // }
+
+  // if (photosQuery.isError) {
+  //   return <div>{photosQuery.error}</div>;
+  // }
+
   return (
-    <div className="sm:w-full bg-transparent fixed  z-[9999] ">
-      <div className="container mx-auto py-4 flex items-center justify-center">
+    <div className="min-w-full bg-transparent absolute top-0 z-50 ">
+      <div className="mx-auto py-8 flex  items-center container flex-wrap ">
         <div className="sm:text-lg text-gray-100 ml-2 text-xs font-body whitespace-nowrap ">
           Photo Smash
         </div>
@@ -52,6 +69,11 @@ const Header = () => {
               {route.title}
             </Link>
           ))}
+        </div>
+        <div className="container mx-auto">
+          <div className="min-w-full items-center justify-center inline-flex pt-8">
+            <Carousel topics={topicsQuery.data} />
+          </div>
         </div>
       </div>
     </div>

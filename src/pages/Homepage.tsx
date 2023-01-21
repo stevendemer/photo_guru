@@ -8,8 +8,6 @@ import React, { useEffect, UIEvent, useCallback, useRef } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 
 const Homepage = () => {
-  const observerElem = useRef(null);
-
   const {
     data,
     status,
