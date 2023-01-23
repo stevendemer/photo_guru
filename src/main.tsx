@@ -6,6 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { Provider } from "react-redux";
+import store from "./store";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,12 +26,14 @@ const root = ReactDOM.createRoot(el);
 
 root.render(
   <React.StrictMode>
-    <Router>
-      <QueryClientProvider client={queryClient}>
-        <App />
-        <ToastContainer />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <QueryClientProvider client={queryClient}>
+          <App />
+          <ToastContainer />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </Router>
+    </Provider>
   </React.StrictMode>
 );

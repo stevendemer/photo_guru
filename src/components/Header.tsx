@@ -45,18 +45,10 @@ const Header = () => {
     return <div>Topics loading...</div>;
   }
 
-  // if (topicsQuery.isError) {
-  //   return <div>{topicsQuery.error.message}</div>;
-  // }
-
-  // if (photosQuery.isError) {
-  //   return <div>{photosQuery.error}</div>;
-  // }
-
   return (
     <div className="min-w-full bg-transparent absolute top-0 z-50 ">
       <div className="mx-auto py-8 flex  items-center container flex-wrap ">
-        <div className="sm:text-lg text-gray-100 ml-2 text-xs font-body whitespace-nowrap ">
+        <div className="sm:text-2xl text-gray-100 ml-2 text-xs font-body font-semibold whitespace-nowrap">
           Photo Smash
         </div>
         <div className="sm:flex items-center mx-auto sm:justify-center space-x-4 hidden">
