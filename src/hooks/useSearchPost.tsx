@@ -42,7 +42,8 @@ export default function useSearchPost() {
   useEffect(() => {
     if (data) {
       const flattenData = data.pages.flatMap((page) => page.data);
-      setPosts(flattenData[0].results);
+      const finalData = flattenData.flatMap((res) => res.results);
+      setPosts(finalData);
     }
   }, [data]);
 
