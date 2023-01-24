@@ -22,11 +22,7 @@ const PhotoGrid = forwardRef<HTMLInputElement, IProps>(function PhotoGrid(
   const renderPosts = posts.map((post, idx) => {
     return (
       <div className="py-4 px-2 min-w-full last:mb-0 last:pb-0" key={idx}>
-        <Image
-          author={post.user?.name}
-          url={post.urls?.regular}
-          alt={post.alt_description}
-        />
+        <Image post={post} />
       </div>
     );
   });
