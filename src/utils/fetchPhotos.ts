@@ -12,7 +12,7 @@ export const fetchPhotoById = async (id: number | string): Promise<any> => {
   return resp.data;
 };
 
-export const searchPhoto = async (query: string): Promise<any> => {
+export const searchPhoto = async (query: string | undefined): Promise<any> => {
   const resp = await axios.get(
     `search/photos/?query=${query}&page=1&per_page=30`
   );

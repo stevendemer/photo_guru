@@ -4,8 +4,9 @@ import { useQueries, useQuery } from "react-query";
 import { searchPhoto } from "utils/fetchPhotos";
 import { IPhoto } from "../shared/IPhoto";
 import { fetchTopics } from "../utils/fetchPhotos";
-import { ITopic } from "../shared/ITopic";
 import Carousel from "./Carousel";
+import { useAtom } from "jotai";
+import { queryAtom } from "../atoms/postsAtom";
 
 const routes = [
   {
@@ -19,7 +20,7 @@ const routes = [
 ];
 
 const Header = () => {
-  const [query, setQuery] = useState<string>("");
+  const [query] = useAtom(queryAtom);
 
   const [photosQuery, topicsQuery] = useQueries([
     {
@@ -49,7 +50,7 @@ const Header = () => {
     <div className="min-w-full bg-transparent absolute top-0 z-50 ">
       <div className="mx-auto py-8 flex  items-center container flex-wrap ">
         <div className="sm:text-2xl text-gray-100 ml-2 text-xs font-body font-semibold whitespace-nowrap">
-          Photo Smash
+          <Link to="/">Photo Smash</Link>
         </div>
         <div className="sm:flex items-center mx-auto sm:justify-center space-x-4 hidden">
           {routes.map((route, idx) => (

@@ -1,19 +1,35 @@
-import useFetchRandomPhoto from "../hooks/useFetchRandomPhoto";
+import useFetchRandomPhoto from "../hooks/useFetchRandomPost";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import Skeleton from "react-loading-skeleton";
+import Searchbar from "./Searchbar";
 
 const Hero = () => {
-  // const { isLoading, isError, data, error, refetch } = useFetchRandomPhoto();
+  const { isLoading, isError, data, error, refetch } = useFetchRandomPhoto();
 
-  // if (isError) {
-  //   return <div>{error.message}</div>;
-  // }
+  if (isError) {
+    return <div>{error.message}</div>;
+  }
+
+  if (isLoading) {
+    return (
+      <div className="bg-cover relative overflow-hidden">
+        <div className="bg-no-repeat object-cover max-h-[620px] min-w-full">
+          <Skeleton count={1} />
+        </div>
+      </div>
+    );
+  }
+
+  const addDefaultImg = () => {
+    return;
+    ("https://images.unsplash.com/photo-1584060622420-0673aad46076?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80");
+  };
 
   return (
     <section className="relative overflow-hidden bg-no-repeat bg-cover">
       <img
-        src={
-          "https://images.unsplash.com/photo-1584060622420-0673aad46076?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
-        }
+        onError={() => addDefaultImg()}
+        src={data?.urls?.regular}
         alt="background"
         className="max-h-[620px] min-w-full object-cover bg-no-repeat brightness-50"
       />
@@ -25,31 +41,7 @@ const Hero = () => {
           <p className="max-w-2xl mb-6  text-slate-100 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-300">
             Internet's biggest source of 4K photos
           </p>
-          <form className="text-black my-10 w-full">
-            <span className="md:flex flex-row bg-slate-50 py-2 items-center justify-around mx-auto rounded-md  border-slate-300-2 w-full ">
-              <input
-                type="text"
-                placeholder="Search for a photo"
-                className="rounded-lg bg-transparent text-black font-thin outline-none ring-0  focus:outline-none px-4 py-[10px] w-full"
-              />
-              <button className=" text-black font-bold px-2 py-1 outline-none hover:outline-2 hover:opacity-50">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                  />
-                </svg>
-              </button>
-            </span>
-          </form>
+          <Searchbar />
         </div>
       </div>
     </section>

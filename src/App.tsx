@@ -1,14 +1,24 @@
-import Layout from "components/Layout";
-import Homepage from "pages/Homepage";
 import { Routes, Route } from "react-router-dom";
+import { lazy } from "react";
+import { SkeletonTheme } from "react-loading-skeleton";
+import { Suspense } from "react";
+
+const Layout = lazy(() => import("components/Layout"));
+const Homepage = lazy(() => import("pages/Homepage"));
+const Loader = lazy(() => import("components/Loader"));
+const Searchpage = lazy(() => import("pages/Searchpage"));
+
 import "./index.css";
 
 export default function App() {
   return (
     <Layout>
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-      </Routes>
+      <SkeletonTheme baseColor="#313131" highlightColor="#525252">
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/s/photos/" element={<Searchpage />} />
+        </Routes>
+      </SkeletonTheme>
     </Layout>
   );
 }
