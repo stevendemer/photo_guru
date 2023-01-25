@@ -9,14 +9,16 @@
     .masonry {
       column-gap: 1.5em;
       column-count: 1;
+      grid-auto-rows: minmax(1fr, auto);
     }
     .masonry-sm {
       column-gap: 1.5em;
-      column-count: 2;
+      column-count: 4;
     }
     .masonry-md {
-      column-gap: 1.5em;
-      column-count: 3;
+      column-gap: 2em;
+      column-count: 4;
+      grid-auto-rows: minmax(1fr, auto);
     }
     .break-inside {
       break-inside: avoid;

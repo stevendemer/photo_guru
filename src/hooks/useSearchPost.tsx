@@ -10,19 +10,19 @@ export default function useSearchPost() {
   const query = useAtomValue(queryAtom);
 
   const searchPost = async ({
-    pageParam = 1,
+    pageParam = 20,
     query = "",
   }: {
     pageParam?: number;
     query?: string;
   }) => {
     const resp = await axios.get(
-      `search/photos?page=${pageParam}&query=${query}`
+      `search/photos?page=1&per_page=${pageParam}&query=${query}`
     );
     console.log("Inside axios ", query);
     return {
       data: resp.data,
-      nextPage: pageParam + 1,
+      nextPage: pageParam + 10,
     };
   };
 

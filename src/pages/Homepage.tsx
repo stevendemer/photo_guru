@@ -18,14 +18,8 @@ const Homepage = () => {
   const { error, isFetchingNextPage, status, hasNextPage, fetchNextPage } =
     useFetchPosts();
 
-  const loadNext = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  };
-
   if (status === "loading") {
-    return <Skeleton />;
+    return <Loader />;
   }
 
   if (status === "error") {
@@ -40,6 +34,7 @@ const Homepage = () => {
         dataLength={posts.length}
         next={() => fetchNextPage()}
       >
+        {isFetchingNextPage && <Loader />}
         <PhotoGrid />
       </InfiniteScroll>
     </div>
