@@ -47,14 +47,14 @@ const Searchbar = () => {
           value={value}
           onChange={onChange}
         />
-        <button className=" text-black font-bold px-2 py-1 outline-none hover:outline-2 hover:opacity-50">
+        <button className="opacity-60 text-black font-extrabold px-2 py-1 outline-none hover:outline-2 hover:opacity-95">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-8 h-6"
           >
             <path
               strokeLinecap="round"

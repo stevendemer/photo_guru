@@ -23,11 +23,6 @@ const Image = ({ post }: { post: IPhoto }) => {
         src={post.urls?.regular}
         alt={post.alt_description}
       />
-      <div className=" absolute min-w-full bg-slate-50">
-        <div className="text-slate-50 sm:text-md font-normal absolute bottom-5 left-5 whitespace-nowrap">
-          {post.user.username}
-        </div>
-      </div>
     </div>
   );
 };

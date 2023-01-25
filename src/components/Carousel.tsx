@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
+import { Tab } from "@headlessui/react";
+import { useState, useEffect, useCallback, Fragment } from "react";
 import { ITopic } from "../shared/ITopic";
 
 const Carousel = ({ topics }: { topics: ITopic[] }) => {
@@ -14,20 +15,35 @@ const Carousel = ({ topics }: { topics: ITopic[] }) => {
   const handleOnPrev = () => {};
 
   return (
-    <div className="w-full flex bg-slate-200 dark:bg-slate-400 whitespace-nowrap items-center flex-nowrap justify-center py-4  backdrop-blur-lg drop-shadow-lg bg-opacity-40 rounded-lg">
-      {topics.map((topic) => (
-        <div
-          onClick={handleClick}
-          key={topic.id}
-          className={`flex justify-center items-center`}
-        >
-          <div
-            className={`sm:text-sm text-xs decoration-slate-200 underline-offset-8 decoration-2  text-gray-50 mx-2 cursor-pointer rounded-full p-2 duration-300 link link-underline           `}
-          >
-            {topic.title.trim()}
-          </div>
-        </div>
-      ))}
+    <div className="w-full flex bg-slate-200 dark:bg-slate-400 whitespace-nowrap items-center flex-nowrap justify-center py-4  backdrop-blur-lg drop-shadow-lg bg-opacity-40 rounded-lg border-none ring-0">
+      <Tab.Group
+        selectedIndex={currentIdx}
+        onChange={setCurrentIdx}
+        vertical
+        defaultIndex={1}
+      >
+        <Tab.List>
+          {topics.map((topic) => (
+            <Tab className="border-none ring-0 outline-none">
+              {({ selected }) => (
+                <div
+                  onClick={handleClick}
+                  key={topic.id}
+                  className={`flex justify-center items-center`}
+                >
+                  <div
+                    className={`sm:text-sm border-none ring-0 inset-0 text-xs decoration-slate-200 underline-offset-8 decoration-2  text-gray-50 mx-2 cursor-pointer rounded-full p-2 duration-300 link link-underline ${
+                      selected ? "bg-slate-300/10 p-2" : null
+                    }`}
+                  >
+                    {topic.title.trim()}
+                  </div>
+                </div>
+              )}
+            </Tab>
+          ))}
+        </Tab.List>
+      </Tab.Group>
     </div>
   );
 };
