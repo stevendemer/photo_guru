@@ -24,12 +24,16 @@ const Searchbar = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (query === "" || query === " ") {
+      navigate("/");
+    }
+  }, [query]);
+
   const onSubmit = (e: FormEvent<EventTarget>) => {
     e.preventDefault();
-    if (value !== "") {
-      setQuery(value);
-      navigate("/s/photos");
-    }
+    setQuery(value);
+    navigate("/s/photos");
     setValue("");
   };
 

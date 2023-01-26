@@ -30,9 +30,11 @@ const PhotoGrid = forwardRef<HTMLInputElement, IProps>(function PhotoGrid(
   const hasContent = posts.length ? (
     renderPosts
   ) : (
-    <span className="flex justify-center items-center text-xl text-red-600">
-      No posts found !
-    </span>
+    <div className="relative">
+      <div className="flex justify-center items-center text-xl text-gray-400 font-bold">
+        No posts found !
+      </div>
+    </div>
   );
 
   return (

@@ -10,7 +10,6 @@ const Layout = ({ children }: { children: ReactNode }) => {
       <Header />
       <Hero />
       <main>{children}</main>
-      <Footer />
     </>
   );
 };
