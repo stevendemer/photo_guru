@@ -16,7 +16,7 @@ export default function App() {
       <SkeletonTheme baseColor="#313131" highlightColor="#525252">
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/s/photos/" element={<Searchpage />} />
+          <Route path="/s/photos/:query" element={<Searchpage />} />
         </Routes>
       </SkeletonTheme>
     </Layout>

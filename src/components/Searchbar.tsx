@@ -1,11 +1,13 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
 import axios from "../utils/axios";
 import { useAtom, useSetAtom } from "jotai";
 import { queryAtom, postsAtom } from "../atoms/postsAtom";
 import useSearchPost from "../hooks/useSearchPost";
-import Loader from "./Loader";
-import { useNavigate } from "react-router-dom";
+import {
+  createSearchParams,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { useInfiniteQuery, useIsFetching } from "react-query";
 
 type IProps = {
@@ -21,19 +23,23 @@ const Searchbar = () => {
   const setPosts = useSetAtom(postsAtom);
   const [query, setQuery] = useAtom(queryAtom);
   const { status, refetch, fetchNextPage, hasNextPage } = useSearchPost();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (query === "" || query === " ") {
-      navigate("/");
+    if (query) {
+      navigate(`/s/photos/${query}`);
     }
   }, [query]);
 
   const onSubmit = (e: FormEvent<EventTarget>) => {
     e.preventDefault();
-    setQuery(value);
-    navigate("/s/photos");
+    if (value !== " ") {
+      setQuery(value);
+    } else {
+      navigate("/");
+    }
     setValue("");
   };
 
@@ -43,22 +49,15 @@ const Searchbar = () => {
 
   return (
     <form onSubmit={onSubmit} className="text-black my-10 w-full">
-      <span className="md:flex flex-row bg-slate-50 py-2 items-center justify-around mx-auto rounded-md  border-slate-300-2 w-full ">
-        <input
-          type="text"
-          placeholder="Search for a photo"
-          className="rounded-lg bg-transparent text-black font-thin outline-none ring-0  focus:outline-none px-4 py-[10px] w-full"
-          value={value}
-          onChange={onChange}
-        />
-        <button className="opacity-60 text-black font-extrabold px-2 py-1 outline-none hover:outline-2 hover:opacity-95">
+      <span className="md:flex flex-row bg-slate-50 py-2 items-center justify-around mx-auto rounded-md  border-slate-300-2 w-full">
+        <button className="opacity-60 text-black font-extrabold px-2 outline-none hover:outline-2 hover:opacity-95">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-8 h-6"
+            className="w-10 h-8"
           >
             <path
               strokeLinecap="round"
@@ -67,6 +66,13 @@ const Searchbar = () => {
             />
           </svg>
         </button>
+        <input
+          type="text"
+          placeholder="Search for a photo"
+          className="rounded-lg bg-transparent text-black font-thin outline-none ring-0  focus:outline-none px-4 py-[10px] w-full"
+          value={value}
+          onChange={onChange}
+        />
       </span>
     </form>
   );

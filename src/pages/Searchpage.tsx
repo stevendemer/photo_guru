@@ -5,9 +5,11 @@ import { useAtom } from "jotai";
 import Loader from "components/Loader";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PhotoGrid from "components/PhotoGrid";
+import { useNavigate } from "react-router-dom";
 
 const Searchpage = () => {
   const [query, setQuery] = useAtom(queryAtom);
+  const navigate = useNavigate();
 
   const { status, fetchNextPage, error, hasNextPage, posts } = useSearchPost();
 

@@ -22,28 +22,25 @@ const routes = [
 const Header = () => {
   const [query] = useAtom(queryAtom);
 
-  const [photosQuery, topicsQuery] = useQueries([
-    {
-      queryKey: ["photos_query", query],
-      queryFn: async () => searchPhoto(query),
-      enabled: Boolean(query),
-    },
-    {
-      queryKey: ["categories"],
-      queryFn: fetchTopics,
-    },
-  ]);
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => fetchTopics(),
+  });
 
-  useEffect(() => {
-    photosQuery.refetch();
-  }, [query]);
+  // const [photosQuery, topicsQuery] = useQueries([
+  //   {
+  //     queryKey: ["photos_query", query],
+  //     queryFn: async () => searchPhoto(query),
+  //     enabled: Boolean(query),
+  //   },
+  //   {
+  //     queryKey: ["categories"],
+  //     queryFn: fetchTopics,
+  //   },
+  // ]);
 
-  if (photosQuery.isLoading) {
-    return <div>Photos loading...</div>;
-  }
-
-  if (topicsQuery.isLoading) {
-    return <div>Topics loading...</div>;
+  if (isLoading) {
+    return <div>Categories are loading...</div>;
   }
 
   return (
@@ -65,7 +62,7 @@ const Header = () => {
         </div>
         <div className="container mx-auto">
           <div className="min-w-full items-center justify-center inline-flex pt-8">
-            <Carousel topics={topicsQuery.data} />
+            <Carousel topics={data} />
           </div>
         </div>
       </div>

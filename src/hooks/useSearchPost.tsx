@@ -32,10 +32,9 @@ export default function useSearchPost() {
       async () => searchPost({ query }),
       {
         refetchOnMount: false,
-        refetchOnWindowFocus: true,
+        refetchOnWindowFocus: false,
         getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
         enabled: !!query,
-        keepPreviousData: false,
       }
     );
 

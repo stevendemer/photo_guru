@@ -1,42 +1,34 @@
-import { useState, useEffect } from "react";
+import { atom } from "jotai";
 
-const useLocalStorage = (
+const useAtomWithStorage = (
   key: string,
   initialValue: {} | string | undefined
 ) => {
-  // logic is executed only once
-  const [storedValue, setStoredValue] = useState(() => {
-    if (typeof window !== "undefined") {
-      return initialValue;
-    }
-
+  const getInitialValue = () => {
     try {
       const item = localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
+      if (item !== null) {
+        return JSON.parse(item);
+      }
+      return initialValue;
     } catch (error) {
       console.log(error);
       return initialValue;
-    }
-  });
-
-  const setValue = (value: Function) => {
-    try {
-      // to have the same api as useState
-      const valueToStore =
-        value instanceof Function ? value(storedValue) : value;
-
-      setStoredValue(valueToStore);
-
-      // save to local storage
-      if (typeof window !== "undefined") {
-        localStorage.setItem(key, JSON.stringify(valueToStore));
-      }
-    } catch (error) {
-      console.log(error);
     }
   };
 
-  return [storedValue, setValue];
+  const baseAtom = atom(getInitialValue());
+
+  const derivedAtom = atom(
+    (get) => get(baseAtom),
+    (get, set, update) => {
+      const nextValue =
+        typeof update === "function" ? update(get(baseAtom)) : update;
+      set(baseAtom, nextValue);
+      localStorage.setItem(key, JSON.stringify(nextValue));
+    }
+  );
+  return derivedAtom;
 };
 
-export default useLocalStorage;
+export default useAtomWithStorage;
