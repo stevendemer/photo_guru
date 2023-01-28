@@ -1,5 +1,5 @@
 import { IPhoto } from "shared/IPhoto";
-import axios from "../utils/axios";
+import axios from "../api/axios";
 import { useQuery } from "react-query";
 
 export default function useFetchRandomPhoto() {

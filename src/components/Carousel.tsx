@@ -1,18 +1,44 @@
 import { Tab } from "@headlessui/react";
-import { useState, useEffect, useCallback, Fragment } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { ITopic } from "../shared/ITopic";
+import { useAtom } from "jotai";
+import { topicsAtom } from "atoms/postsAtom";
+import useFetchCategoryPhotos from "../hooks/useFetchCategories";
 
-const Carousel = ({ topics }: { topics: ITopic[] }) => {
+const Carousel = ({ topics }: { topics?: ITopic[] }) => {
   const [currentIdx, setCurrentIdx] = useState<number>(0);
   const [active, setActive] = useState<boolean>(false);
+  const [currentTopic, setCurrentTopic] = useState<string | undefined>(
+    undefined
+  );
+  const { data, isError, isLoading, error } =
+    useFetchCategoryPhotos(currentTopic);
 
-  const handleClick = () => {
+  const handleClick = (topic: ITopic) => {
     setActive(!active);
+    setCurrentTopic(topic.slug);
+    console.log(topic.slug);
   };
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   const handleOnNext = () => {};
 
   const handleOnPrev = () => {};
+
+  if (isLoading) {
+    return (
+      <span className="text-center text-xl text-green-400 ">Loading..</span>
+    );
+  }
+
+  if (isError) {
+    return (
+      <span className="text-center text-xl text-red-500">{error.message}</span>
+    );
+  }
 
   return (
     <div className="w-full flex bg-slate-200 dark:bg-slate-400 whitespace-nowrap items-center flex-nowrap justify-center py-4  backdrop-blur-lg drop-shadow-lg bg-opacity-40 rounded-lg border-none ring-0">
@@ -23,11 +49,11 @@ const Carousel = ({ topics }: { topics: ITopic[] }) => {
         defaultIndex={1}
       >
         <Tab.List>
-          {topics.map((topic) => (
-            <Tab className="border-none ring-0 outline-none">
+          {topics?.map((topic) => (
+            <Tab key={topic.id} className="border-none ring-0 outline-none">
               {({ selected }) => (
                 <div
-                  onClick={handleClick}
+                  onClick={(e) => handleClick(topic)}
                   key={topic.id}
                   className={`flex justify-center items-center`}
                 >

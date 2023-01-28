@@ -1,6 +1,7 @@
+import { forwardRef } from "react";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { MouseEventHandler, useState } from "react";
+import { useState } from "react";
 import Modal from "./Modal";
 import { IPhoto } from "shared/IPhoto";
 
@@ -20,8 +21,8 @@ const Image = ({ post }: { post: IPhoto }) => {
       <LazyLoadImage
         effect="blur"
         className="rounded-lg "
-        src={post.urls?.regular}
-        alt={post.alt_description}
+        src={post?.urls?.regular}
+        alt={post?.alt_description}
       />
     </div>
   );

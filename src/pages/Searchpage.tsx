@@ -8,7 +8,6 @@ import PhotoGrid from "components/PhotoGrid";
 import { useNavigate } from "react-router-dom";
 
 const Searchpage = () => {
-  const [query, setQuery] = useAtom(queryAtom);
   const navigate = useNavigate();
 
   const { status, fetchNextPage, error, hasNextPage, posts } = useSearchPost();
@@ -39,7 +38,7 @@ const Searchpage = () => {
         dataLength={posts?.length}
         next={() => fetchNextPage()}
       >
-        <PhotoGrid />
+        <PhotoGrid posts={posts} />
       </InfiniteScroll>
     </div>
   );

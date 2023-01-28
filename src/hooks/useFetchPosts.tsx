@@ -1,21 +1,20 @@
 import { useQuery, useInfiniteQuery } from "react-query";
-import axios from "../utils/axios";
+import axios from "../api/axios";
 import { IPhoto } from "shared/IPhoto";
 import { useAtom, useSetAtom } from "jotai";
 import { postsAtom } from "../atoms/postsAtom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function useFetchPosts() {
-  const setPosts = useSetAtom(postsAtom);
+  const [posts, setPosts] = useAtom(postsAtom);
 
-  const getPosts = async ({ pageParam = 1, perPage = 10 }) => {
+  const getPosts = async ({ pageParam = 1 }) => {
     const resp = await axios.get(
-      `photos?page=${pageParam}&per_page=${perPage}&order_by=popular`
+      `photos?page=${pageParam}&per_page=30&order_by=popular`
     );
     return {
       data: resp.data,
       nextPage: pageParam + 1,
-      perPage: perPage + 10,
     };
   };
   const {
@@ -40,6 +39,7 @@ export default function useFetchPosts() {
   }, [data]);
 
   return {
+    posts,
     setPosts,
     error,
     status,

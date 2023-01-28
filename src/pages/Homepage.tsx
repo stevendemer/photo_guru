@@ -3,15 +3,19 @@ import Image from "components/Image";
 import useFetchPosts from "hooks/useFetchPosts";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useAtom, useAtomValue } from "jotai";
-import { postsAtom } from "../atoms/postsAtom";
 import Loader from "components/Loader";
-import { useInfiniteQuery } from "react-query";
+import useInfiniteScroll from "hooks/useInfiniteScroll";
+import { useState, useEffect } from "react";
 
 const Homepage = () => {
-  const posts = useAtomValue(postsAtom);
-
-  const { error, isFetchingNextPage, status, hasNextPage, fetchNextPage } =
-    useFetchPosts();
+  const {
+    posts,
+    setPosts,
+    fetchNextPage,
+    isFetchingNextPage,
+    error,
+    hasNextPage,
+  } = useFetchPosts();
 
   if (status === "loading") {
     return <Loader />;
@@ -29,8 +33,7 @@ const Homepage = () => {
         dataLength={posts.length}
         next={() => fetchNextPage()}
       >
-        {isFetchingNextPage && <Loader />}
-        <PhotoGrid />
+        <PhotoGrid posts={posts} />
       </InfiniteScroll>
     </div>
   );

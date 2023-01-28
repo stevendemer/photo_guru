@@ -1,10 +1,22 @@
-import { useQuery } from "react-query";
-import axios from "../utils/axios";
+import { useQuery, useInfiniteQuery } from "react-query";
+import axios from "../api/axios";
+import { useEffect, useState } from "react";
+import { ITopic } from "../shared/ITopic";
 
-export default function useFetchCategories() {
-  const getCategories = async () => {
-    const resp = await axios.get("topics/?per_page=10");
-    return resp.data;
+export default function useFetchCategoryPhotos(category?: string) {
+  const fetchCategoryPhotos = async ({ page = 1 }: { page?: number }) => {
+    const resp = await axios.get(`topics/${category}?page=${page}`);
+
+    return {
+      data: resp.data,
+      nextPage: page + 1,
+    };
   };
-  return useQuery(["categories"], getCategories, { refetchOnMount: false });
+  return useInfiniteQuery(["categories"], async () => fetchCategoryPhotos, {
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
+    getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
+    keepPreviousData: false,
+    enabled: Boolean(category),
+  });
 }

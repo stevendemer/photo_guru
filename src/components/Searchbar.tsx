@@ -1,5 +1,5 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
-import axios from "../utils/axios";
+import axios from "../api/axios";
 import { useAtom, useSetAtom } from "jotai";
 import { queryAtom, postsAtom } from "../atoms/postsAtom";
 import useSearchPost from "../hooks/useSearchPost";
@@ -29,7 +29,7 @@ const Searchbar = () => {
 
   useEffect(() => {
     if (query) {
-      navigate(`/s/photos/${query}`);
+      navigate(`/s/photos/q=${query}`);
     }
   }, [query]);
 

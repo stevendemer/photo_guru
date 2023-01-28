@@ -1,5 +1,5 @@
 import { useQuery, useInfiniteQuery, useIsFetching } from "react-query";
-import axios from "../utils/axios";
+import axios from "../api/axios";
 import { useAtom, useSetAtom, useAtomValue } from "jotai";
 import { queryAtom, postsAtom } from "../atoms/postsAtom";
 import { useEffect, useState } from "react";
@@ -10,19 +10,19 @@ export default function useSearchPost() {
   const query = useAtomValue(queryAtom);
 
   const searchPost = async ({
-    pageParam = 20,
+    pageParam = 1,
     query = "",
   }: {
     pageParam?: number;
     query?: string;
   }) => {
     const resp = await axios.get(
-      `search/photos?page=1&per_page=${pageParam}&query=${query}`
+      `search/photos/?query=${query}&page=${pageParam}&per_page=30`
     );
     console.log("Inside axios ", query);
     return {
       data: resp.data,
-      nextPage: pageParam + 10,
+      nextPage: pageParam + 1,
     };
   };
 
@@ -31,8 +31,8 @@ export default function useSearchPost() {
       ["search_posts", query],
       async () => searchPost({ query }),
       {
-        refetchOnMount: false,
-        refetchOnWindowFocus: false,
+        refetchOnMount: true,
+        refetchOnWindowFocus: true,
         getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
         enabled: !!query,
       }

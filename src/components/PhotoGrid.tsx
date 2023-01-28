@@ -6,18 +6,12 @@ import { postsAtom, queryAtom } from "../atoms/postsAtom";
 
 type IProps = {
   children?: ReactNode;
+  posts: IPhoto[];
 };
 
-const PhotoGrid = forwardRef<HTMLInputElement, IProps>(function PhotoGrid(
-  props: IProps,
-  ref
-) {
-  const { children } = props;
-  const posts = useAtomValue(postsAtom);
+const PhotoGrid = (props: IProps) => {
+  const { children, posts } = props;
   const query = useAtomValue(queryAtom);
-
-  console.log(posts);
-  console.log(query);
 
   const renderPosts = posts.map((post, idx) => {
     return (
@@ -40,6 +34,6 @@ const PhotoGrid = forwardRef<HTMLInputElement, IProps>(function PhotoGrid(
   return (
     <div className="masonry sm:masonry-sm md:masonry-md mx-4">{hasContent}</div>
   );
-});
+};
 
 export default PhotoGrid;
