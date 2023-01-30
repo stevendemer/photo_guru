@@ -31,9 +31,7 @@ const PhotoGrid = (props: IProps) => {
     </div>
   );
 
-  return (
-    <div className="masonry sm:masonry-sm md:masonry-md mx-4">{hasContent}</div>
-  );
+  return <div className="columns-1 gap-8 md:columns-3 ">{hasContent}</div>;
 };
 
 export default PhotoGrid;

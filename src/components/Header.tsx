@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import React, { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { useQueries, useQuery } from "react-query";
-import { searchPhoto } from "api/fetchPhotos";
 import { IPhoto } from "../shared/IPhoto";
 import { fetchTopics } from "../api/fetchPhotos";
 import Carousel from "./Carousel";
 import { useAtom } from "jotai";
 import { queryAtom } from "../atoms/postsAtom";
 import { ITopic } from "../shared/ITopic";
+import Searchbar from "./Searchbar";
 
 const routes = [
   {
@@ -23,7 +23,7 @@ const routes = [
 const Header = () => {
   const [query] = useAtom(queryAtom);
 
-  const { data, isLoading, isError, error } = useQuery<ITopic, Error>({
+  const { data, isLoading, isError, error } = useQuery<ITopic[], Error>({
     queryKey: ["categories"],
     queryFn: async () => fetchTopics(),
   });
@@ -41,14 +41,15 @@ const Header = () => {
   }
 
   return (
-    <div className="min-w-full bg-transparent absolute top-0 z-50 ">
+    <div className="w-full bg-transparent absolute top-0 z-50 ">
       <div className="mx-auto py-8 flex  items-center container flex-wrap ">
-        <div className="sm:text-2xl text-gray-100 ml-2 text-xs font-body font-semibold whitespace-nowrap hover:scale-110 duration-100">
+        <div className="sm:text-xl text-gray-100 ml-2 text-xs font-body font-semibold whitespace-nowrap hover:scale-x-105 duration-200">
           <Link to="/">Photo Smash</Link>
         </div>
-        <div className="container mx-auto">
-          <div className="min-w-full items-center justify-center inline-flex pt-8">
+        <div className="container mx-auto pt-20">
+          <div className="min-w-full items-center justify-center flex-col ">
             <Carousel topics={data} />
+            <Searchbar />
           </div>
         </div>
       </div>

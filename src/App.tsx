@@ -7,6 +7,7 @@ const Layout = lazy(() => import("components/Layout"));
 const Homepage = lazy(() => import("pages/Homepage"));
 const Loader = lazy(() => import("components/Loader"));
 const Searchpage = lazy(() => import("pages/Searchpage"));
+const Topicpage = lazy(() => import("pages/Topicpage"));
 
 import "./index.css";
 
@@ -17,6 +18,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/s/photos/:query" element={<Searchpage />} />
+          <Route path="/t/:topic" element={<Topicpage />} />
         </Routes>
       </SkeletonTheme>
     </Layout>

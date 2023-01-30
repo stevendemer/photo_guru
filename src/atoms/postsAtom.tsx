@@ -8,4 +8,4 @@ export const queryAtom = atom<string>("");
 
 export const themeAtom = atom<string>("light");
 
-export const topicsAtom = atom<ITopic[] | ITopic>([]);
+export const topicsAtom = atom<string | undefined>(undefined);

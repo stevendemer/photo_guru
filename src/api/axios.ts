@@ -16,12 +16,9 @@ export const getPosts = async () => {
   return resp.data;
 };
 
-export const getCategories = async (
-  pageParam = 1,
-  category: string,
-  options = {}
-) => {
-  const resp = await instance.get(`topics/${category}?page=${pageParam}`);
+export const getCategories = async (category?: string) => {
+  const resp = await instance.get(`topics/${category}/photos`);
+  console.log("resp data is", resp.data);
   return resp.data;
 };
 

@@ -4,44 +4,45 @@ import { ITopic } from "../shared/ITopic";
 import { useAtom } from "jotai";
 import { topicsAtom } from "atoms/postsAtom";
 import useFetchCategoryPhotos from "../hooks/useFetchCategories";
+import { useNavigate } from "react-router-dom";
 
 const Carousel = ({ topics }: { topics?: ITopic[] }) => {
   const [currentIdx, setCurrentIdx] = useState<number>(0);
   const [active, setActive] = useState<boolean>(false);
+  const [topic, setTopic] = useAtom(topicsAtom);
   const [currentTopic, setCurrentTopic] = useState<string | undefined>(
     undefined
   );
-  const { data, isError, isLoading, error } =
-    useFetchCategoryPhotos(currentTopic);
+  useFetchCategoryPhotos();
+  const navigate = useNavigate();
 
   const handleClick = (topic: ITopic) => {
     setActive(!active);
-    setCurrentTopic(topic.slug);
-    console.log(topic.slug);
+    setTopic(topic.slug);
+    navigate(`/t/${topic.slug}`);
+    console.log("Current topic is ", topic);
+    // console.log(topic.slug);
+    // console.log(topic);
   };
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   const handleOnNext = () => {};
 
   const handleOnPrev = () => {};
 
-  if (isLoading) {
-    return (
-      <span className="text-center text-xl text-green-400 ">Loading..</span>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <span className="text-center text-xl text-green-400 ">Loading..</span>
+  //   );
+  // }
 
-  if (isError) {
-    return (
-      <span className="text-center text-xl text-red-500">{error.message}</span>
-    );
-  }
+  // if (isError) {
+  //   return (
+  //     <span className="text-center text-xl text-red-500">{error.message}</span>
+  //   );
+  // }
 
   return (
-    <div className="w-full flex bg-slate-200 dark:bg-slate-400 whitespace-nowrap items-center flex-nowrap justify-center py-4  backdrop-blur-lg drop-shadow-lg bg-opacity-40 rounded-lg border-none ring-0">
+    <div className="w-full flex bg-slate-200 dark:bg-slate-400 whitespace-nowrap items-center flex-nowrap justify-center py-4  backdrop-blur-lg drop-shadow-lg bg-opacity-40 rounded-lg border-none ring-0 ">
       <Tab.Group
         selectedIndex={currentIdx}
         onChange={setCurrentIdx}

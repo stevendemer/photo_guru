@@ -28,13 +28,12 @@ export default function useFetchPosts() {
     refetchOnMount: false,
     keepPreviousData: false,
     getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
+    select: (data) => data.pages.flatMap((page) => page.data),
   });
 
   useEffect(() => {
     if (data) {
-      console.log(data);
-      const flattenData = data.pages.flatMap((page) => page.data);
-      setPosts(flattenData);
+      setPosts(data);
     }
   }, [data]);
 
