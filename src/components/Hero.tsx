@@ -36,7 +36,6 @@ const Hero = () => {
             <p className="max-w-2xl mb-6  text-slate-100 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-300">
               Internet's biggest source of 4K photos
             </p>
-            <Searchbar />
           </div>
         </div>
       </div>

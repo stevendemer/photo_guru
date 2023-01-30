@@ -35,7 +35,7 @@ const Searchbar = () => {
 
   const onSubmit = (e: FormEvent<EventTarget>) => {
     e.preventDefault();
-    if (value !== " ") {
+    if (value !== "") {
       setQuery(value);
     } else {
       navigate("/");
@@ -52,7 +52,7 @@ const Searchbar = () => {
       onSubmit={onSubmit}
       className="text-black my-10  justify-center items-center flex w-full"
     >
-      <span className="flex bg-white  py-2 justify-around rounded-md container ">
+      <span className="flex bg-white  py-2 justify-around rounded-lg sm:container ">
         <button className="opacity-60 text-black font-extrabold px-2 outline-none hover:outline-2 hover:opacity-95">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +72,7 @@ const Searchbar = () => {
         <input
           type="text"
           placeholder="Search for a photo"
-          className="rounded-lg  text-black bg-white font-regular outline-none ring-0 focus:outline-none px-4 py-[10px] w-full"
+          className="rounded-lg text-black bg-white font-regular outline-none ring-0 focus:outline-none px-4 py-[10px] w-full"
           value={value}
           onChange={onChange}
         />

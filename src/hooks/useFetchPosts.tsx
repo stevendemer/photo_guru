@@ -3,7 +3,7 @@ import axios from "../api/axios";
 import { IPhoto } from "shared/IPhoto";
 import { useAtom, useSetAtom } from "jotai";
 import { postsAtom } from "../atoms/postsAtom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 export default function useFetchPosts() {
   const [posts, setPosts] = useAtom(postsAtom);
@@ -24,21 +24,24 @@ export default function useFetchPosts() {
     fetchNextPage,
     isFetchingNextPage,
     hasNextPage,
+    refetch,
   } = useInfiniteQuery(["posts"], getPosts, {
-    refetchOnMount: false,
-    keepPreviousData: false,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
     getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
     select: (data) => data.pages.flatMap((page) => page.data),
+    staleTime: 0,
+    cacheTime: 0,
   });
 
-  useEffect(() => {
-    if (data) {
-      setPosts(data);
-    }
+  useMemo(() => {
+    if (!data) return [];
+    setPosts(data);
   }, [data]);
 
   return {
     posts,
+    data,
     setPosts,
     error,
     status,

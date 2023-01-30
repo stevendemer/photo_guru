@@ -1,12 +1,7 @@
 const Loader = () => {
   return (
-    <div className="flex justify-center items-center">
-      <div
-        className="spinner-grow inline-block w-12 h-12 bg-current rounded-full opacity-0"
-        role="status"
-      >
-        <span className="visually-hidden">Loading...</span>
-      </div>
+    <div className="flex items-center justify-center space-x-2">
+      <div className="text-xl text-blue-400">Loading..</div>
     </div>
   );
 };

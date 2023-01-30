@@ -4,10 +4,12 @@ import useFetchPosts from "hooks/useFetchPosts";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useAtom, useAtomValue } from "jotai";
 import Loader from "components/Loader";
+import { IPhoto } from "../shared/IPhoto";
 
 const Homepage = () => {
   const {
     posts,
+    data,
     setPosts,
     fetchNextPage,
     isFetchingNextPage,
@@ -26,10 +28,10 @@ const Homepage = () => {
   return (
     <div className="px-4 py-8 w-full">
       <InfiniteScroll
-        loader={<Loader />}
         hasMore={!!hasNextPage}
-        dataLength={posts.length}
         next={() => fetchNextPage()}
+        loader={<Loader />}
+        dataLength={posts.length}
       >
         <PhotoGrid posts={posts} />
       </InfiniteScroll>

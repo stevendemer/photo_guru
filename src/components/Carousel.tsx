@@ -42,7 +42,7 @@ const Carousel = ({ topics }: { topics?: ITopic[] }) => {
   // }
 
   return (
-    <div className="w-full flex bg-slate-200 dark:bg-slate-400 whitespace-nowrap items-center flex-nowrap justify-center py-4  backdrop-blur-lg drop-shadow-lg bg-opacity-40 rounded-lg border-none ring-0 ">
+    <div className="container md:w-full flex bg-slate-200 dark:bg-slate-400 whitespace-nowrap items-center flex-nowrap justify-center py-4  backdrop-blur-lg drop-shadow-lg bg-opacity-40 rounded-lg border-none ring-0 ">
       <Tab.Group
         selectedIndex={currentIdx}
         onChange={setCurrentIdx}

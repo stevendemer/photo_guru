@@ -14,13 +14,11 @@ import "./index.css";
 export default function App() {
   return (
     <Layout>
-      <SkeletonTheme baseColor="#313131" highlightColor="#525252">
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/s/photos/:query" element={<Searchpage />} />
-          <Route path="/t/:topic" element={<Topicpage />} />
-        </Routes>
-      </SkeletonTheme>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/s/photos/:query" element={<Searchpage />} />
+        <Route path="/t/:topic" element={<Topicpage />} />
+      </Routes>
     </Layout>
   );
 }

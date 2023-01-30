@@ -35,6 +35,8 @@ export default function useSearchPost() {
         refetchOnWindowFocus: true,
         getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
         enabled: !!query,
+        staleTime: 0,
+        cacheTime: 0,
       }
     );
 
@@ -43,8 +45,11 @@ export default function useSearchPost() {
       const flattenData = data.pages.flatMap((page) => page.data);
       const finalData = flattenData.flatMap((res) => res.results);
       setPosts(finalData);
+      refetch();
     }
-  }, [data]);
+  }, [data, refetch]);
+
+  console.log("query", query);
 
   return {
     posts,
