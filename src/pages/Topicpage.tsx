@@ -42,8 +42,6 @@ const Topicpage = () => {
     }
   }
 
-  console.log(data);
-
   return (
     <>
       <div className="px-4 py-8 w-full">

@@ -6,14 +6,14 @@ import { postsAtom, queryAtom } from "../atoms/postsAtom";
 
 type IProps = {
   children?: ReactNode;
-  posts: IPhoto[];
+  posts?: IPhoto[];
 };
 
 const PhotoGrid = memo((props: IProps) => {
   const { children, posts } = props;
   const query = useAtomValue(queryAtom);
 
-  console.log("The posts are ", posts);
+  // console.log("The posts are ", posts);
 
   const renderPosts = posts?.map((post, idx) => {
     return (
@@ -24,7 +24,7 @@ const PhotoGrid = memo((props: IProps) => {
   });
 
   const hasContent =
-    posts?.length > 0 ? (
+    posts && posts.length > 0 ? (
       renderPosts
     ) : (
       <div className="relative">

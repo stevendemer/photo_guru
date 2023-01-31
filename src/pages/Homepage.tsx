@@ -5,17 +5,20 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useAtom, useAtomValue } from "jotai";
 import Loader from "components/Loader";
 import { IPhoto } from "../shared/IPhoto";
+import { useEffect } from "react";
+import { queryAtom } from "../atoms/postsAtom";
 
 const Homepage = () => {
-  const {
-    posts,
-    data,
-    setPosts,
-    fetchNextPage,
-    isFetchingNextPage,
-    error,
-    hasNextPage,
-  } = useFetchPosts();
+  const { data, fetchNextPage, isFetchingNextPage, error, hasNextPage } =
+    useFetchPosts();
+
+  const [queries, setQueries] = useAtom(queryAtom);
+
+  useEffect(() => {
+    if (queries) {
+      setQueries([]);
+    }
+  }, []);
 
   if (status === "loading") {
     return <Loader />;
@@ -31,9 +34,9 @@ const Homepage = () => {
         hasMore={!!hasNextPage}
         next={() => fetchNextPage()}
         loader={<Loader />}
-        dataLength={posts.length}
+        dataLength={data.length}
       >
-        <PhotoGrid posts={posts} />
+        <PhotoGrid posts={data} />
       </InfiniteScroll>
     </div>
   );

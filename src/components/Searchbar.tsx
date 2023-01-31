@@ -21,22 +21,24 @@ type Inputs = {
 const Searchbar = () => {
   const [value, setValue] = useState<string>("");
   const setPosts = useSetAtom(postsAtom);
-  const [query, setQuery] = useAtom(queryAtom);
+  const [queries, setQueries] = useAtom(queryAtom);
   const { status, refetch, fetchNextPage, hasNextPage } = useSearchPost();
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (query) {
-      navigate(`/s/photos/q=${query}`);
+    if (queries.length > 0) {
+      navigate(`/s/photos/q=${queries[0]}`);
+    } else {
+      navigate("/");
     }
-  }, [query]);
+  }, [queries]);
 
   const onSubmit = (e: FormEvent<EventTarget>) => {
     e.preventDefault();
     if (value !== "") {
-      setQuery(value);
+      // prepend the new input to the array of queries
+      setQueries((prev) => [value, ...prev]);
     } else {
       navigate("/");
     }

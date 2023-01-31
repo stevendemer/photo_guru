@@ -24,25 +24,15 @@ export default function useFetchPosts() {
     fetchNextPage,
     isFetchingNextPage,
     hasNextPage,
-    refetch,
   } = useInfiniteQuery(["posts"], getPosts, {
-    refetchOnMount: true,
+    refetchOnMount: false,
     refetchOnWindowFocus: true,
     getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
     select: (data) => data.pages.flatMap((page) => page.data),
-    staleTime: 0,
-    cacheTime: 0,
   });
 
-  useMemo(() => {
-    if (!data) return [];
-    setPosts(data);
-  }, [data]);
-
   return {
-    posts,
     data,
-    setPosts,
     error,
     status,
     hasNextPage,

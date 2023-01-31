@@ -3,7 +3,6 @@ import axios from "../api/axios";
 import { useAtom, useSetAtom, useAtomValue } from "jotai";
 import { queryAtom, postsAtom } from "../atoms/postsAtom";
 import { useEffect, useState } from "react";
-import { IPhoto } from "../shared/IPhoto";
 
 export default function useSearchPost() {
   const [posts, setPosts] = useAtom(postsAtom);
@@ -19,7 +18,6 @@ export default function useSearchPost() {
     const resp = await axios.get(
       `search/photos/?query=${query}&page=${pageParam}&per_page=30`
     );
-    console.log("Inside axios ", query);
     return {
       data: resp.data,
       nextPage: pageParam + 1,
@@ -29,14 +27,12 @@ export default function useSearchPost() {
   const { data, status, error, hasNextPage, fetchNextPage, refetch } =
     useInfiniteQuery(
       ["search_posts", query],
-      async () => searchPost({ query }),
+      async () => searchPost({ query: query[0] }),
       {
         refetchOnMount: true,
         refetchOnWindowFocus: true,
         getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
         enabled: !!query,
-        staleTime: 0,
-        cacheTime: 0,
       }
     );
 
@@ -45,9 +41,8 @@ export default function useSearchPost() {
       const flattenData = data.pages.flatMap((page) => page.data);
       const finalData = flattenData.flatMap((res) => res.results);
       setPosts(finalData);
-      refetch();
     }
-  }, [data, refetch]);
+  }, [data]);
 
   console.log("query", query);
 
