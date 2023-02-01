@@ -26,6 +26,10 @@ const Topicpage = () => {
     }
   );
 
+  useEffect(() => {
+    document.title = "Guru - Topics";
+  }, []);
+
   if (isLoading) {
     return (
       <div className="flex justify-center text-center">

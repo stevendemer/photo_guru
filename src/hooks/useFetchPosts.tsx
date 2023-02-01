@@ -1,4 +1,4 @@
-import { useQuery, useInfiniteQuery } from "react-query";
+import { useInfiniteQuery } from "react-query";
 import axios from "../api/axios";
 import { IPhoto } from "shared/IPhoto";
 import { useAtom, useSetAtom } from "jotai";
@@ -25,13 +25,22 @@ export default function useFetchPosts() {
     isFetchingNextPage,
     hasNextPage,
   } = useInfiniteQuery(["posts"], getPosts, {
-    refetchOnMount: false,
+    refetchOnMount: true,
     refetchOnWindowFocus: true,
     getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
-    select: (data) => data.pages.flatMap((page) => page.data),
+    staleTime: 0,
+    cacheTime: 0,
   });
 
+  useEffect(() => {
+    if (data) {
+      let result = data.pages.flatMap((page) => page.data);
+      setPosts(result);
+    }
+  }, [data]);
+
   return {
+    posts,
     data,
     error,
     status,

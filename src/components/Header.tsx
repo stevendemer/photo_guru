@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import React, { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
-import { useQueries, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import { IPhoto } from "../shared/IPhoto";
 import { fetchTopics } from "../api/fetchPhotos";
 import Carousel from "./Carousel";
@@ -44,7 +43,7 @@ const Header = () => {
     <div className="w-full bg-transparent absolute top-0 z-50 ">
       <div className="mx-auto py-8 flex  items-center container flex-wrap ">
         <div className="sm:text-xl text-gray-100 ml-2 text-xs font-body font-semibold whitespace-nowrap hover:scale-x-105 duration-200">
-          <Link to="/">Photo Smash</Link>
+          <Link to="/">Photo Guru</Link>
         </div>
         <div className="container mx-auto pt-20">
           <div className="min-w-full items-center justify-center flex-col ">

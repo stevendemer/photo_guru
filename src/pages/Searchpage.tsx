@@ -13,7 +13,7 @@ const Searchpage = () => {
   const { status, fetchNextPage, error, hasNextPage, posts } = useSearchPost();
 
   useEffect(() => {
-    document.title = "Smash - Search";
+    document.title = "Guru - Search";
   }, []);
 
   const loadNext = () => {

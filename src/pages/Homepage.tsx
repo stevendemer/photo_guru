@@ -1,23 +1,18 @@
 import PhotoGrid from "components/PhotoGrid";
-import Image from "components/Image";
 import useFetchPosts from "hooks/useFetchPosts";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useAtom, useAtomValue } from "jotai";
 import Loader from "components/Loader";
 import { IPhoto } from "../shared/IPhoto";
 import { useEffect } from "react";
-import { queryAtom } from "../atoms/postsAtom";
+import { queryAtom, postsAtom } from "../atoms/postsAtom";
 
 const Homepage = () => {
-  const { data, fetchNextPage, isFetchingNextPage, error, hasNextPage } =
+  const { data, posts, fetchNextPage, isFetchingNextPage, error, hasNextPage } =
     useFetchPosts();
 
-  const [queries, setQueries] = useAtom(queryAtom);
-
   useEffect(() => {
-    if (queries) {
-      setQueries([]);
-    }
+    document.title = "Guru - Home";
   }, []);
 
   if (status === "loading") {
@@ -34,9 +29,9 @@ const Homepage = () => {
         hasMore={!!hasNextPage}
         next={() => fetchNextPage()}
         loader={<Loader />}
-        dataLength={data.length}
+        dataLength={posts.length}
       >
-        <PhotoGrid posts={data} />
+        <PhotoGrid posts={posts} />
       </InfiniteScroll>
     </div>
   );

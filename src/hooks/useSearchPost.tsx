@@ -44,8 +44,6 @@ export default function useSearchPost() {
     }
   }, [data]);
 
-  console.log("query", query);
-
   return {
     posts,
     setPosts,
