@@ -3,21 +3,23 @@ import Image from "./Image";
 import { IPhoto } from "shared/IPhoto";
 import { useAtomValue } from "jotai";
 import { postsAtom, queryAtom } from "../atoms/postsAtom";
+import ImageSkeleton from "./ImageSkeleton";
 
 type IProps = {
   children?: ReactNode;
   posts?: IPhoto[];
+  isLoading?: boolean;
 };
 
 const PhotoGrid = memo((props: IProps) => {
-  const { children, posts } = props;
-  const query = useAtomValue(queryAtom);
+  const { children, posts, isLoading } = props;
 
   // console.log("The posts are ", posts);
 
   const renderPosts = posts?.map((post, idx) => {
     return (
       <div className="py-4 px-2 min-w-full last:mb-0 last:pb-0" key={idx}>
+        {isLoading && <ImageSkeleton images={posts.length} />}
         <Image post={post} />
       </div>
     );

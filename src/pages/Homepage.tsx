@@ -3,23 +3,26 @@ import useFetchPosts from "hooks/useFetchPosts";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useAtom, useAtomValue } from "jotai";
 import Loader from "components/Loader";
-import { IPhoto } from "../shared/IPhoto";
 import { useEffect } from "react";
 import { queryAtom, postsAtom } from "../atoms/postsAtom";
+import ImageSkeleton from "../components/ImageSkeleton";
 
 const Homepage = () => {
-  const { data, posts, fetchNextPage, isFetchingNextPage, error, hasNextPage } =
+  const [queries, setQueries] = useAtom(queryAtom);
+
+  const { data, isLoading, error, isError, hasNextPage, fetchNextPage } =
     useFetchPosts();
 
   useEffect(() => {
-    document.title = "Guru - Home";
+    document.title = "Photo Guru";
+    setQueries([]);
   }, []);
 
-  if (status === "loading") {
-    return <Loader />;
+  if (isLoading) {
+    return <ImageSkeleton images={data?.length} />;
   }
 
-  if (status === "error") {
+  if (isError) {
     error instanceof Error && <div>{error.message}</div>;
   }
 
@@ -29,9 +32,9 @@ const Homepage = () => {
         hasMore={!!hasNextPage}
         next={() => fetchNextPage()}
         loader={<Loader />}
-        dataLength={posts.length}
+        dataLength={data?.length}
       >
-        <PhotoGrid posts={posts} />
+        <PhotoGrid posts={data} />
       </InfiniteScroll>
     </div>
   );

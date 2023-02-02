@@ -6,11 +6,18 @@ import Loader from "components/Loader";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PhotoGrid from "components/PhotoGrid";
 import { useNavigate } from "react-router-dom";
+import ImageSkeleton from "../components/ImageSkeleton";
 
 const Searchpage = () => {
-  const navigate = useNavigate();
-
-  const { status, fetchNextPage, error, hasNextPage, posts } = useSearchPost();
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useSearchPost();
 
   useEffect(() => {
     document.title = "Guru - Search";
@@ -22,11 +29,11 @@ const Searchpage = () => {
     }
   };
 
-  if (status === "loading") {
+  if (isLoading) {
     return <Loader />;
   }
 
-  if (status === "error") {
+  if (isError) {
     error instanceof Error && <div>{error.message}</div>;
   }
 
@@ -35,10 +42,10 @@ const Searchpage = () => {
       <InfiniteScroll
         loader={<Loader />}
         hasMore={!!hasNextPage}
-        dataLength={posts?.length}
+        dataLength={data?.length}
         next={() => fetchNextPage()}
       >
-        <PhotoGrid posts={posts} />
+        <PhotoGrid posts={data} />
       </InfiniteScroll>
     </div>
   );

@@ -6,9 +6,10 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { atomsWithQuery, queryClientAtom } from "jotai-tanstack-query";
 import { Provider } from "jotai";
-
-import "react-toastify/dist/ReactToastify.css";
+import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import "react-toastify/dist/ReactToastify.css";
+
 import { Suspense } from "react";
 import Loader from "components/Loader";
 
@@ -31,7 +32,9 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <Router>
         <Provider initialValues={[[queryClientAtom, queryClient]]}>
-          <App />
+          <SkeletonTheme baseColor="#202020" highlightColor="#444">
+            <App />
+          </SkeletonTheme>
         </Provider>
         <ToastContainer />
       </Router>

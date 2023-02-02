@@ -5,7 +5,6 @@ import { queryAtom, postsAtom } from "../atoms/postsAtom";
 import { useEffect, useState } from "react";
 
 export default function useSearchPost() {
-  const [posts, setPosts] = useAtom(postsAtom);
   const query = useAtomValue(queryAtom);
 
   const searchPost = async ({
@@ -16,7 +15,7 @@ export default function useSearchPost() {
     query?: string;
   }) => {
     const resp = await axios.get(
-      `search/photos/?query=${query}&page=${pageParam}&per_page=30`
+      `search/photos?page=${pageParam}&per_page=40&query=${query}`
     );
     return {
       data: resp.data,
@@ -24,33 +23,20 @@ export default function useSearchPost() {
     };
   };
 
-  const { data, status, error, hasNextPage, fetchNextPage, refetch } =
-    useInfiniteQuery(
-      ["search_posts", query],
-      async () => searchPost({ query: query[0] }),
-      {
-        refetchOnMount: true,
-        refetchOnWindowFocus: true,
-        getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
-        enabled: !!query,
-      }
-    );
-
-  useEffect(() => {
-    if (data) {
-      const flattenData = data.pages.flatMap((page) => page.data);
-      const finalData = flattenData.flatMap((res) => res.results);
-      setPosts(finalData);
+  return useInfiniteQuery(
+    ["search_posts", query],
+    async () => searchPost({ query: query[0] }),
+    {
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
+      getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
+      enabled: Boolean(query),
+      select: (data) => {
+        const flatten = data.pages
+          .flatMap((page) => page.data)
+          .flatMap((res) => res.results);
+        return flatten;
+      },
     }
-  }, [data]);
-
-  return {
-    posts,
-    setPosts,
-    error,
-    refetch,
-    status,
-    hasNextPage,
-    fetchNextPage,
-  };
+  );
 }
