@@ -1,67 +1,59 @@
 import Image from "./Image";
 import { Dialog, Transition } from "@headlessui/react";
-import { useState, ReactNode, Fragment } from "react";
+import { useState, ReactNode, Fragment, useEffect } from "react";
 import { IPhoto } from "../shared/IPhoto";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const Modal = ({
-  isOpen,
   setIsOpen,
+  isOpen,
   post,
 }: {
-  isOpen: boolean;
   setIsOpen: (x: boolean) => void;
+  isOpen: boolean;
   post: IPhoto;
 }) => {
+  console.log("Inside modal");
+
+  // close the modal when Esc is pressed
+  useEffect(() => {
+    function handleEsc(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("keydown", handleEsc);
+
+    return () => document.removeEventListener("keydown", handleEsc);
+  }, []);
+
   return (
-    <Transition
-      show={isOpen}
-      enter="transition-all duration-100 ease-out"
-      enterFrom="transform scale-95 opacity-0"
-      as={Fragment}
-      leave="transition duration-100 ease-out"
+    <div
+      aria-hidden="true"
+      className="z-50 fixed inset-0 outline-none h-screen w-full m-auto backdrop-blur-sm"
+      tabIndex={1}
     >
       <div
-        aria-hidden="true"
-        className="fixed top-0 left-0 w-full h-full outline-none overflow-x-hidden overflow-y-auto z-50"
+        onClick={() => setIsOpen(false)}
+        className=" fixed top-0 left-0 mt-5 ml-6 z-50 text-black text-lg hover:text-slate-700 leading-10"
       >
-        <Dialog
-          className="relative z-50"
-          open={isOpen}
-          onClose={() => setIsOpen(false)}
-        >
-          <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
-          <div className="fixed inset-0 flex items-center justify-center p-4">
-            <div className="relative w-full max-h-fit flex justify-center mt-10">
-              <div className="flex items-center justify-center bg-slate-20/20 h-[90vh] py-4 w-full">
-                <Dialog.Panel className="max-w-lg">
-                  <Dialog.Title className="text-black w-full flex absolute left-0 text-xl text-center">
-                    <div className="relative left-6 flex items-center justify-center space-x-2 w-full h-16 select-none mt-2">
-                      <div className="absolute cursor-pointer left-2 top-1 space-x-2 inline-block bg-transparent text-slate-50 dark:bg-gray-400/60 mx-4 px-8 py-2 rounded-xl hover:bg-blue-400/50 delay-100">
-                        <img
-                          className=" object-cover inline-block w-18 h-16 rounded-full"
-                          src={post.user.profile_image?.medium}
-                        />
-                        <span className="text-xs font-regular inline-block capitalize">
-                          Uploaded by {post.user.username}
-                        </span>
-                      </div>
-                    </div>
-                  </Dialog.Title>
-                  <LazyLoadImage
-                    className="rounded-lg object-cover"
-                    effect="black-and-white"
-                    src={post.urls?.regular}
-                    alt={post.alt_description}
-                  />
-                </Dialog.Panel>
-              </div>
-            </div>
-          </div>
-        </Dialog>
+        X
       </div>
-    </Transition>
+      <div className="max-w-screen-lg sm:h-[calc(100%-3rem)] mx-auto relative flex flex-col w-full text-current">
+        <div className="fixed inset-0 bg-black opacity-50" />
+        <div className="sticky top-10 z-30 text-black text-xl capitalize text-center leading-tight">
+          {post.alt_description}
+        </div>
+        {/* Content */}
+        <div className="flex flex-col justify-center items-center flex-1 bg-slate-200/90 shadow-lg w-full h-screen p-4 fixed left-1/2 -translate-x-1/2 mb-28">
+          <img
+            className="min-w-[620px] max-w-screen-2xl max-h-full object-none object-center rounded-lg"
+            src={post.urls?.regular}
+            alt="photo zoomed"
+          />
+        </div>
+      </div>
+    </div>
   );
 };
-
 export default Modal;

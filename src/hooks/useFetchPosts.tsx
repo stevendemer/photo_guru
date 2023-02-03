@@ -1,7 +1,5 @@
 import { useInfiniteQuery } from "react-query";
 import axios from "../api/axios";
-import { postsAtom } from "../atoms/postsAtom";
-import { useEffect, useState, useMemo } from "react";
 
 export default function useFetchPosts() {
   const getPosts = async ({ pageParam = 1 }) => {

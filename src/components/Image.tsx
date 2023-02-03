@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { createPortal } from "react-dom";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useState } from "react";
@@ -13,17 +14,24 @@ const Image = ({ post }: { post: IPhoto }) => {
   };
 
   return (
-    <div
-      onClick={() => onClick()}
-      className="py-4 space-x-2 cursor-pointer relative hover:drop-shadow-2xl shadow-slate-50 transition-all duration-300 delay-75 hover:scale-105 hover:translate-2 overflow-hidden "
-    >
+    <div className="py-4 space-x-2 cursor-pointer relative hover:drop-shadow-2xl shadow-slate-50 transition-all duration-300 delay-75 hover:scale-105 hover:translate-2 overflow-hidden ">
       <LazyLoadImage
-        effect="blur"
+        onClick={onClick}
+        effect="opacity"
         className="rounded-lg w-fit"
         src={post?.urls?.regular}
         alt={post?.alt_description}
       />
-      {isOpen && <Modal setIsOpen={setIsOpen} post={post} isOpen={isOpen} />}
+      {isOpen &&
+        createPortal(
+          <div
+            onBlur={onClick}
+            className="md:px-20 lg:px-28 pb-4 cursor-auto pointer-events-none overflow-x-hidden overflow-y-auto"
+          >
+            <Modal isOpen={isOpen} setIsOpen={setIsOpen} post={post} />
+          </div>,
+          document.body
+        )}
     </div>
   );
 };

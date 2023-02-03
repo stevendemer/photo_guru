@@ -11,6 +11,7 @@ export interface IPhoto {
     full: string;
     regular: string;
     thumb: string;
+    small: string;
   };
   likes?: string | number;
   user: {
