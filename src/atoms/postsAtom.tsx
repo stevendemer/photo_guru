@@ -9,6 +9,6 @@ export const queryAtom = atomWithStorage<string[]>("query", []);
 
 export const postsAtom = atom<IPhoto[]>([]);
 
-export const themeAtom = atom<string>("light");
+export const themeAtom = atomWithStorage<string>("theme", "light");
 
 export const topicsAtom = atom<string | undefined>(undefined);

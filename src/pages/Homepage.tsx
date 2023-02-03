@@ -27,7 +27,7 @@ const Homepage = () => {
   }
 
   return (
-    <div className="px-4 py-8 w-full">
+    <div className="px-4 py-8 w-full ">
       <InfiniteScroll
         hasMore={!!hasNextPage}
         next={() => fetchNextPage()}

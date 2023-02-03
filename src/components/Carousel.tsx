@@ -29,18 +29,6 @@ const Carousel = ({ topics }: { topics?: ITopic[] }) => {
 
   const handleOnPrev = () => {};
 
-  // if (isLoading) {
-  //   return (
-  //     <span className="text-center text-xl text-green-400 ">Loading..</span>
-  //   );
-  // }
-
-  // if (isError) {
-  //   return (
-  //     <span className="text-center text-xl text-red-500">{error.message}</span>
-  //   );
-  // }
-
   return (
     <div className="container md:w-full flex bg-slate-200 dark:bg-slate-400 whitespace-nowrap items-center flex-nowrap justify-center py-4  backdrop-blur-lg drop-shadow-lg bg-opacity-40 rounded-lg border-none ring-0 ">
       <Tab.Group
@@ -59,8 +47,8 @@ const Carousel = ({ topics }: { topics?: ITopic[] }) => {
                   className={`flex justify-center items-center`}
                 >
                   <div
-                    className={`sm:text-sm border-none ring-0 inset-0 text-xs decoration-slate-200 underline-offset-8 decoration-2  text-gray-50 mx-2 cursor-pointer rounded-full p-2 duration-300 link link-underline ${
-                      selected ? "bg-slate-300/10 p-2" : null
+                    className={`sm:text-sm border-none ring-0 inset-0 text-xs decoration-slate-200 underline-offset-8 decoration-2  text-gray-50  mx-2 cursor-pointer rounded-full p-2 duration-300 link link-underline ${
+                      selected ? "bg-slate-200 text-gray-600 p-2" : null
                     }`}
                   >
                     {topic.title.trim()}

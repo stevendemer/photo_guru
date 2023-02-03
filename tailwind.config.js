@@ -1,18 +1,14 @@
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  darkMode: "class",
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       fontFamily: {
-        'body': ['Quicksand, sans-serif'],
-        'sans': ['Roboto, sans-serif']
-      }
+        body: ["Quicksand, sans-serif"],
+        sans: ["Roboto, sans-serif"],
+      },
     },
   },
   plugins: [],
-}
+};
