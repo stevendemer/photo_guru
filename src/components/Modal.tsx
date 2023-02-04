@@ -30,7 +30,7 @@ const Modal = ({
   return (
     <div
       aria-hidden="true"
-      className="z-50 fixed inset-0 outline-none h-screen w-full m-auto backdrop-blur-sm"
+      className="z-50 fixed inset-0 outline-none h-screen w-full m-auto"
       tabIndex={1}
     >
       <div
@@ -39,15 +39,26 @@ const Modal = ({
       >
         X
       </div>
-      <div className="max-w-screen-lg sm:h-[calc(100%-3rem)] mx-auto relative flex flex-col w-full text-current">
+      <div className="max-w-screen-lg sm:h-[calc(100vh-8rem)] mx-auto relative flex flex-col w-full text-current">
         <div className="fixed inset-0 bg-black opacity-50" />
         <div className="sticky top-10 z-30 text-black text-xl capitalize text-center leading-tight">
-          {post.alt_description}
+          <div className="absolute  -translate-x-1/2 mx-2">
+            <div className="flex mx-auto justify-evenly items-center max-w-lg bg-cyan-400 p-2 rounded-full">
+              <div className="text-leading text-center text-lg sm:text-md text-slate-100 font-medium mx-2">
+                {post.user.name}
+              </div>
+              <img
+                className="rounded-full w-8 h-8 mx-4"
+                src={post.user.profile_image?.small}
+                alt="profile image"
+              />
+            </div>
+          </div>
         </div>
         {/* Content */}
-        <div className="flex flex-col justify-center items-center flex-1 bg-slate-200/90 shadow-lg w-full h-screen p-4 fixed left-1/2 -translate-x-1/2 mb-28">
+        <div className="flex flex-col justify-center items-center flex-1 bg-slate-200 dark:bg-black/70 shadow-lg w-full h-screen p-4 fixed left-1/2 -translate-x-1/2 mb-28">
           <img
-            className="min-w-[620px] max-w-screen-2xl max-h-full object-none object-center rounded-lg"
+            className="min-w-[620px] max-w-screen-2xl max-h-full object-none object-center rounded-2xl"
             src={post.urls?.regular}
             alt="photo zoomed"
           />
