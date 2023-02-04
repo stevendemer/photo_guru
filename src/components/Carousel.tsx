@@ -47,8 +47,8 @@ const Carousel = ({ topics }: { topics?: ITopic[] }) => {
                   className={`flex justify-center items-center`}
                 >
                   <div
-                    className={`sm:text-sm border-none ring-0 inset-0 text-xs decoration-slate-200 underline-offset-8 decoration-2  text-gray-50  mx-2 cursor-pointer rounded-full p-2 duration-300 link link-underline ${
-                      selected ? "bg-slate-200 text-gray-600 p-2" : null
+                    className={`sm:text-sm border-none delay-100 ring-0 inset-0 text-xs decoration-slate-200 underline-offset-8 decoration-2  text-gray-50  mx-2 cursor-pointer transition-all rounded-full p-2 duration-100 link link-underline ${
+                      selected ? "bg-slate-50 text-gray-600 p-2" : null
                     }`}
                   >
                     {topic.title.trim()}

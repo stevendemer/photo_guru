@@ -18,7 +18,7 @@ const Image = ({ post }: { post: IPhoto }) => {
       <LazyLoadImage
         onClick={onClick}
         effect="opacity"
-        className="rounded-lg w-fit"
+        className="rounded-lg max-w-full aspect-auto"
         src={post?.urls?.regular}
         alt={post?.alt_description}
       />

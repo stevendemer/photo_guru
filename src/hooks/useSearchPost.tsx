@@ -15,7 +15,7 @@ export default function useSearchPost() {
     query?: string;
   }) => {
     const resp = await axios.get(
-      `search/photos?page=${pageParam}&per_page=40&query=${query}`
+      `search/photos?page=${pageParam}&query=${query}`
     );
     return {
       data: resp.data,
