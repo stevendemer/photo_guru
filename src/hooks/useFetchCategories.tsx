@@ -1,13 +1,12 @@
-import { useQuery, useInfiniteQuery } from "react-query";
+import { useInfiniteQuery } from "react-query";
 import axios from "../api/axios";
 import { useEffect, useState } from "react";
-import { ITopic } from "../shared/ITopic";
 import { useAtomValue, useAtom } from "jotai";
-import { topicsAtom, postsAtom } from "../atoms/postsAtom";
-import { IPhoto } from "../shared/IPhoto";
+import { topicAtom, postsAtom } from "../atoms/postsAtom";
+import { IInfinitePage } from "../shared/InfinitePage";
 
 export default function useFetchCategoryPhotos() {
-  const topic = useAtomValue(topicsAtom);
+  const topic = useAtomValue(topicAtom);
   const [posts, setPosts] = useAtom(postsAtom);
   const [photos, setPhotos] = useState([]);
 
@@ -26,13 +25,17 @@ export default function useFetchCategoryPhotos() {
     isLoading,
     fetchNextPage,
     isFetchingNextPage,
-  } = useInfiniteQuery<IPhoto[], Error>(["categories"], fetchCategoryPhotos, {
-    refetchOnMount: true,
-    refetchOnWindowFocus: true,
-    getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
-    keepPreviousData: false,
-    enabled: Boolean(topic),
-  });
+  } = useInfiniteQuery<IInfinitePage, Error>(
+    ["categories"],
+    fetchCategoryPhotos,
+    {
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
+      getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
+      keepPreviousData: false,
+      enabled: Boolean(topic),
+    }
+  );
 
   return {
     data,

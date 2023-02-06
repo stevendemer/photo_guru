@@ -5,18 +5,22 @@ import { ToastContainer, toast } from "react-toastify";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { atomsWithQuery, queryClientAtom } from "jotai-tanstack-query";
-import { Provider } from "jotai";
+import { Provider, useAtom } from "jotai";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "react-toastify/dist/ReactToastify.css";
 
-import { Suspense } from "react";
+import { Suspense, ReactNode } from "react";
 import Loader from "components/Loader";
+import {
+  useAtomDevtools,
+  useAtomsDebugValue,
+  useAtomsDevtools,
+} from "jotai-devtools";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      // stale time to 20 seconds
       staleTime: Infinity,
       keepPreviousData: true,
     },

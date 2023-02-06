@@ -1,5 +1,7 @@
 import { useInfiniteQuery } from "react-query";
 import axios from "../api/axios";
+import { IPhoto } from "../shared/IPhoto";
+import { IInfinitePage } from "../shared/InfinitePage";
 
 export default function useFetchPosts() {
   const getPosts = async ({ pageParam = 1 }) => {
@@ -11,7 +13,7 @@ export default function useFetchPosts() {
       nextPage: pageParam + 1,
     };
   };
-  return useInfiniteQuery(["posts"], getPosts, {
+  return useInfiniteQuery<IInfinitePage, Error>(["posts"], getPosts, {
     refetchOnWindowFocus: true,
     getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
     select: (data) => data?.pages.flatMap((page) => page.data),

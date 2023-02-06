@@ -56,21 +56,19 @@ const Header = () => {
             Photo Guru
           </Link>
           <span
-            className="cursor-pointer absolute right-10 -translate-x-1/2 sm: "
+            className="cursor-pointer absolute right-10 -translate-x-1/2 hover:bg-slate-100 hover:text-black rounded-full duration-300 transition-all"
             onClick={onClick}
           >
             {theme === "light" ? (
-              <BsFillMoonFill className="text-gray-100 " />
+              <BsFillMoonFill className="text-yellow-100 border-white w-14 h-6" />
             ) : (
-              <BsSunFill className="text-yellow-200 text-xl sm:text-2xl" />
+              <BsSunFill className="text-yellow-100 text-xl sm:text-2xl w-14 rounded-full h-6 hover:bg-slate-100 hover:text-black" />
             )}
           </span>
         </div>
         <div className="container mx-auto pt-20">
-          <div className="min-w-full items-center justify-center flex-col ">
-            <Carousel topics={data} />
-            <Searchbar />
-          </div>
+          <Carousel topics={data} />
+          <Searchbar />
         </div>
       </div>
     </div>

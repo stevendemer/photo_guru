@@ -8,12 +8,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useQuery, useInfiniteQuery, InfiniteData } from "react-query";
 import useFetchCategoryPhotos from "../hooks/useFetchCategories";
 import { getCategories } from "../api/axios";
-import { topicsAtom } from "../atoms/postsAtom";
+import { topicAtom } from "../atoms/postsAtom";
 import axios from "../api/axios";
 import { IPhoto } from "../shared/IPhoto";
 
 const Topicpage = () => {
-  const topic = useAtomValue(topicsAtom);
+  const topic = useAtomValue(topicAtom);
   const [posts, setPosts] = useState<any>([]);
 
   const { data, isError, error, isLoading } = useQuery<IPhoto[], Error>(

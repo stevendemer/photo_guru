@@ -2,14 +2,14 @@ import { Tab } from "@headlessui/react";
 import { useState, useEffect, Fragment } from "react";
 import { ITopic } from "../shared/ITopic";
 import { useAtom } from "jotai";
-import { topicsAtom } from "atoms/postsAtom";
+import { topicAtom } from "atoms/postsAtom";
 import useFetchCategoryPhotos from "../hooks/useFetchCategories";
 import { useNavigate } from "react-router-dom";
 
 const Carousel = ({ topics }: { topics?: ITopic[] }) => {
   const [currentIdx, setCurrentIdx] = useState<number>(0);
   const [active, setActive] = useState<boolean>(false);
-  const [topic, setTopic] = useAtom(topicsAtom);
+  const [topic, setTopic] = useAtom(topicAtom);
   const [currentTopic, setCurrentTopic] = useState<string | undefined>(
     undefined
   );
@@ -48,7 +48,9 @@ const Carousel = ({ topics }: { topics?: ITopic[] }) => {
                 >
                   <div
                     className={`sm:text-sm border-none delay-100 ring-0 inset-0 text-xs decoration-slate-200 underline-offset-8 decoration-2  text-gray-50  mx-2 cursor-pointer transition-all rounded-full p-2 duration-100 link link-underline ${
-                      selected ? "bg-slate-50 text-gray-600 p-2" : null
+                      topic !== undefined && selected
+                        ? "bg-slate-50 text-gray-600 p-2"
+                        : null
                     }`}
                   >
                     {topic.title.trim()}

@@ -4,11 +4,12 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useAtom, useAtomValue } from "jotai";
 import Loader from "components/Loader";
 import { useEffect } from "react";
-import { queryAtom, postsAtom } from "../atoms/postsAtom";
+import { queryAtom, postsAtom, topicAtom } from "../atoms/postsAtom";
 import ImageSkeleton from "../components/ImageSkeleton";
 
 const Homepage = () => {
   const [queries, setQueries] = useAtom(queryAtom);
+  const [topic, setTopic] = useAtom(topicAtom);
 
   const { data, isLoading, error, isError, hasNextPage, fetchNextPage } =
     useFetchPosts();
@@ -16,6 +17,7 @@ const Homepage = () => {
   useEffect(() => {
     document.title = "Photo Guru";
     setQueries([]);
+    setTopic(undefined);
   }, []);
 
   if (isLoading) {

@@ -7,8 +7,16 @@ const storage = { ...createJSONStorage(() => sessionStorage) };
 
 export const queryAtom = atomWithStorage<string[]>("query", []);
 
+queryAtom.debugLabel = "queryAtom";
+
 export const postsAtom = atom<IPhoto[]>([]);
+
+postsAtom.debugLabel = "postsAtom";
 
 export const themeAtom = atomWithStorage<string>("theme", "light");
 
-export const topicsAtom = atom<string | undefined>(undefined);
+themeAtom.debugLabel = "themeAtom";
+
+export const topicAtom = atom<string | undefined>(undefined);
+
+topicAtom.debugLabel = "topicAtom";

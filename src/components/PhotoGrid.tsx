@@ -6,13 +6,12 @@ import { postsAtom, queryAtom } from "../atoms/postsAtom";
 import ImageSkeleton from "./ImageSkeleton";
 
 type IProps = {
-  children?: ReactNode;
-  posts?: IPhoto[];
+  posts: IPhoto[];
   isLoading?: boolean;
 };
 
 const PhotoGrid = memo((props: IProps) => {
-  const { children, posts, isLoading } = props;
+  const { posts, isLoading } = props;
 
   // console.log("The posts are ", posts);
 
