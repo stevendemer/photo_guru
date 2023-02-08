@@ -3,6 +3,7 @@
 Photo Guru is an image gallery application using the Unsplash API
 
 ![Screenshot 2023-02-08 at 22-02-19 Guru - Search](https://user-images.githubusercontent.com/47676542/217642534-d94270cd-5cc1-4353-a634-806e3edb0a4d.png)
+
 ![Screenshot 2023-02-08 at 22-02-58 Guru - Topics](https://user-images.githubusercontent.com/47676542/217642572-2a2b3219-e065-442a-9b24-ace761a04bfc.png)
 
 
