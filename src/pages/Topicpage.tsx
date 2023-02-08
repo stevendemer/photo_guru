@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
-import { queryAtom } from "atoms/postsAtom";
 import { useAtom, useAtomValue } from "jotai";
-import Loader from "components/Loader";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PhotoGrid from "components/PhotoGrid";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery, useInfiniteQuery, InfiniteData } from "react-query";
-import useFetchCategoryPhotos from "../hooks/useFetchCategories";
 import { getCategories } from "../api/axios";
 import { topicAtom } from "../atoms/postsAtom";
 import axios from "../api/axios";
@@ -49,7 +46,7 @@ const Topicpage = () => {
   return (
     <>
       <div className="px-4 py-8 w-full">
-        <PhotoGrid posts={data} />
+        <PhotoGrid isLoading={isLoading} posts={data} />
       </div>
     </>
   );

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useEffect, useMemo } from "react";
 import useSearchPost from "hooks/useSearchPost";
 import { queryAtom } from "atoms/postsAtom";

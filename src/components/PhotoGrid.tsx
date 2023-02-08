@@ -6,8 +6,8 @@ import { postsAtom, queryAtom } from "../atoms/postsAtom";
 import ImageSkeleton from "./ImageSkeleton";
 
 type IProps = {
-  posts: IPhoto[];
-  isLoading?: boolean;
+  posts: IPhoto[] | undefined;
+  isLoading: boolean;
 };
 
 const PhotoGrid = memo((props: IProps) => {

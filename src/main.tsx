@@ -2,9 +2,9 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { QueryClientProvider, QueryClient } from "react-query";
+import { QueryClientProvider, QueryClient, QueryCache } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { atomsWithQuery, queryClientAtom } from "jotai-tanstack-query";
+import { queryClientAtom } from "jotai-tanstack-query";
 import { Provider, useAtom } from "jotai";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -12,11 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { Suspense, ReactNode } from "react";
 import Loader from "components/Loader";
-import {
-  useAtomDevtools,
-  useAtomsDebugValue,
-  useAtomsDevtools,
-} from "jotai-devtools";
+import { IApiError } from "./shared/IApiError";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,6 +21,14 @@ const queryClient = new QueryClient({
       keepPreviousData: true,
     },
   },
+  queryCache: new QueryCache({
+    onError: (error: any, query) => {
+      if (query.state.data !== undefined) {
+        // only show error if we already have data in the cache
+        toast.error(`Something went wrong ${error.message}`);
+      }
+    },
+  }),
 });
 
 const el = document.getElementById("root") as HTMLElement;

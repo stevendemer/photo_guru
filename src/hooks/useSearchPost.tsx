@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { useQuery, useInfiniteQuery, useIsFetching } from "react-query";
 import axios from "../api/axios";
 import { useAtom, useSetAtom, useAtomValue } from "jotai";
@@ -31,10 +32,10 @@ export default function useSearchPost() {
       refetchOnWindowFocus: true,
       getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
       enabled: Boolean(query),
-      select: (data) => {
+      select: (data: any) => {
         const flatten = data.pages
-          .flatMap((page) => page.data)
-          .flatMap((res) => res.results);
+          .flatMap((page: any) => page.data)
+          .flatMap((res: any) => res.results);
         return flatten;
       },
     }
