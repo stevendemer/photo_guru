@@ -2,8 +2,26 @@
 
 Photo Guru is an image gallery application using the Unsplash API
 
-## Installation
+## Install dependencies
+```
+cd photo-guru/
+npm i 
+```
 
-* Clone the repo 
-* Run npm i inside the project folder
-* Run npm run dev for local server / npm run build for production
+### Run a local server on port 3000
+```
+npm run dev
+```
+
+### Build files for production
+```
+npm run build
+```
+
+## What can i do with this app?
+
+* Browse through the most popular images on Unsplash with infinite scrolling so you don't need to click next or prev to change pages
+* List images based on your input
+* Explore photos based on the chosen category
+
+> Project is in development
