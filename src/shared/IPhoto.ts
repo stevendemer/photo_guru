@@ -2,6 +2,7 @@ export interface IPhoto {
   id: string;
   alt_description?: string;
   width?: number;
+  downloads?: number;
   blur_hash: string;
   height?: number;
   created_at?: string;
