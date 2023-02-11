@@ -31,7 +31,7 @@ npm run build
 ## What can i do with this app?
 
 * Browse through the most popular images on Unsplash with infinite scrolling so you don't need to click next or prev to change pages
-* List images based on your input
-* Explore photos based on the chosen category
+* Search and view top quality photos
+* Explore photos based on your chosen category
 
 > Project is in development
