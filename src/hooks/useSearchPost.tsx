@@ -1,10 +1,7 @@
-import { toast } from "react-toastify";
-import { useQuery, useInfiniteQuery, useIsFetching } from "react-query";
+import { useInfiniteQuery } from "react-query";
 import axios from "../api/axios";
-import { useAtom, useSetAtom, useAtomValue } from "jotai";
+import { useAtomValue } from "jotai";
 import { queryAtom } from "atoms/queryAtom";
-import { postsAtom } from "atoms/postsAtom";
-import { useEffect, useState } from "react";
 
 export default function useSearchPost() {
   const query = useAtomValue(queryAtom);
