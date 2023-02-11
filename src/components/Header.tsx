@@ -50,7 +50,7 @@ const Header = () => {
       <div className="mx-auto py-8 flex  items-center container flex-wrap relative ">
         <div className="sm:text-xl  ml-2 text-xs font-body font-semibold whitespace-nowrap flex justify-around space-x-4 items-center">
           <Link
-            className="text-gray-50 dark:text-gray-200 font-normal duration-100 sm:text-2xl text-lg px-4"
+            className="text-gray-50 dark:text-gray-200 font-body duration-100 sm:text-2xl text-lg px-4"
             to="/"
           >
             Photo Guru

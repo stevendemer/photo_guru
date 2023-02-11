@@ -47,7 +47,6 @@ const Modal = ({
   return (
     <Transition as={Fragment} show={isOpen}>
       <div
-        ref={ref}
         className="z-50 fixed top-0 left-0 w-full h-full outline-none overflow-x-hidden overflow-y-auto"
         tabIndex={-1}
         aria-hidden="true"

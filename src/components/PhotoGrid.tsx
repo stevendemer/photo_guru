@@ -1,8 +1,8 @@
 import { memo, ReactNode, forwardRef } from "react";
 import Image from "./Image";
 import { IPhoto } from "shared/IPhoto";
-import { useAtomValue } from "jotai";
-import { postsAtom, queryAtom } from "../atoms/postsAtom";
+import { postsAtom } from "../atoms/postsAtom";
+import { queryAtom } from "atoms/queryAtom";
 import ImageSkeleton from "./ImageSkeleton";
 
 type IProps = {
@@ -12,8 +12,6 @@ type IProps = {
 
 const PhotoGrid = memo((props: IProps) => {
   const { posts, isLoading } = props;
-
-  // console.log("The posts are ", posts);
 
   const renderPosts = posts?.map((post, idx) => {
     return (
