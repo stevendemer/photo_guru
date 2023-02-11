@@ -1,23 +1,22 @@
 import { useEffect, useState } from "react";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtomValue } from "jotai";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PhotoGrid from "components/PhotoGrid";
-import { useNavigate, useParams } from "react-router-dom";
 import { useQuery, useInfiniteQuery, InfiniteData } from "react-query";
 import { getCategories } from "../api/axios";
-import { topicAtom } from "../atoms/postsAtom";
-import axios from "../api/axios";
+import { topicAtom } from "atoms/topicAtom";
 import { IPhoto } from "../shared/IPhoto";
 
 const Topicpage = () => {
   const topic = useAtomValue(topicAtom);
-  const [posts, setPosts] = useState<any>([]);
+  const [posts, setPosts] = useState([]);
 
   const { data, isError, error, isLoading } = useQuery<IPhoto[], Error>(
     ["categories", topic],
     async () => getCategories(topic),
     {
-      refetchOnMount: true,
+      refetchOnMount: false,
+      staleTime: 4000,
       refetchOnWindowFocus: true,
       enabled: !!topic,
     }

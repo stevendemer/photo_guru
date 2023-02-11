@@ -6,9 +6,10 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useAtom } from "jotai";
 import Loader from "components/Loader";
 import { useEffect } from "react";
-import { queryAtom, postsAtom, topicAtom } from "../atoms/postsAtom";
+import { queryAtom } from "atoms/queryAtom";
+import { topicAtom } from "atoms/topicAtom";
+import { postsAtom } from "atoms/postsAtom";
 import ImageSkeleton from "../components/ImageSkeleton";
-import { IPhoto } from "../shared/IPhoto";
 
 const Homepage = () => {
   const [queries, setQueries] = useAtom(queryAtom);

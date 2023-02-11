@@ -1,8 +1,6 @@
-// @ts-nocheck
 import { toast } from "react-toastify";
 import { useInfiniteQuery } from "react-query";
 import axios from "../api/axios";
-import { IInfinitePage } from "../shared/InfinitePage";
 import { IPhoto } from "../shared/IPhoto";
 
 export default function useFetchPosts() {

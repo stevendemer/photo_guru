@@ -1,14 +1,14 @@
-import { MouseEventHandler, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
-import { IPhoto } from "../shared/IPhoto";
 import { fetchTopics } from "../api/fetchPhotos";
 import Carousel from "./Carousel";
 import { useAtom } from "jotai";
-import { queryAtom, themeAtom } from "../atoms/postsAtom";
+import { queryAtom } from "atoms/queryAtom";
+import { themeAtom } from "atoms/themeAtom";
 import { ITopic } from "../shared/ITopic";
 import Searchbar from "./Searchbar";
-import { BsFillSunFill, BsFillMoonFill, BsSunFill } from "react-icons/bs";
+import { BsFillMoonFill, BsSunFill } from "react-icons/bs";
 
 const Header = () => {
   const [query] = useAtom(queryAtom);

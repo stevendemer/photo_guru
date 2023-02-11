@@ -1,8 +1,9 @@
 import { useInfiniteQuery } from "react-query";
 import axios from "../api/axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAtomValue, useAtom } from "jotai";
-import { topicAtom, postsAtom } from "../atoms/postsAtom";
+import { postsAtom } from "atoms/postsAtom";
+import { topicAtom } from "atoms/topicAtom";
 import { IInfinitePage } from "../shared/InfinitePage";
 
 export default function useFetchCategoryPhotos() {

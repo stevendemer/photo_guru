@@ -2,7 +2,8 @@ import { toast } from "react-toastify";
 import { useQuery, useInfiniteQuery, useIsFetching } from "react-query";
 import axios from "../api/axios";
 import { useAtom, useSetAtom, useAtomValue } from "jotai";
-import { queryAtom, postsAtom } from "../atoms/postsAtom";
+import { queryAtom } from "atoms/queryAtom";
+import { postsAtom } from "atoms/postsAtom";
 import { useEffect, useState } from "react";
 
 export default function useSearchPost() {
@@ -28,9 +29,11 @@ export default function useSearchPost() {
     ["search_posts", query],
     async () => searchPost({ query: query[0] }),
     {
-      refetchOnMount: true,
-      refetchOnWindowFocus: true,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
       getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
+      staleTime: 200 * 1000,
+      cacheTime: 10000,
       enabled: Boolean(query),
       select: (data: any) => {
         const flatten = data.pages

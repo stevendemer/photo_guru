@@ -1,7 +1,8 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import axios from "../api/axios";
 import { useAtom, useSetAtom } from "jotai";
-import { queryAtom, postsAtom } from "../atoms/postsAtom";
+import { postsAtom } from "atoms/postsAtom";
+import { queryAtom } from "atoms/queryAtom";
 import useSearchPost from "../hooks/useSearchPost";
 import {
   createSearchParams,
@@ -27,10 +28,12 @@ const Searchbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (queries.length > 0) {
-      navigate(`/s/photos/q=${queries[0]}`);
-    } else {
-      navigate("/");
+    if (queries !== undefined) {
+      if (queries.length > 0) {
+        navigate(`/s/photos/q=${queries[0]}`);
+      } else {
+        navigate("/");
+      }
     }
   }, [queries]);
 
@@ -38,7 +41,7 @@ const Searchbar = () => {
     e.preventDefault();
     if (value !== "") {
       // prepend the new input to the array of queries
-      setQueries((prev) => [value, ...prev]);
+      setQueries((prev) => [value, ...(prev as string[])]);
     } else {
       navigate("/");
     }

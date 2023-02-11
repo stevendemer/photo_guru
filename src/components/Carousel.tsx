@@ -2,7 +2,7 @@ import { Tab } from "@headlessui/react";
 import { useState, useEffect, Fragment } from "react";
 import { ITopic } from "../shared/ITopic";
 import { useAtom } from "jotai";
-import { topicAtom } from "atoms/postsAtom";
+import { topicAtom } from "atoms/topicAtom";
 import useFetchCategoryPhotos from "../hooks/useFetchCategories";
 import { useNavigate } from "react-router-dom";
 
@@ -20,14 +20,8 @@ const Carousel = ({ topics }: { topics?: ITopic[] }) => {
     setActive(!active);
     setTopic(topic.slug);
     navigate(`/t/${topic.slug}`);
-    console.log("Current topic is ", topic);
-    // console.log(topic.slug);
-    // console.log(topic);
+    // console.log("Current topic is ", topic);
   };
-
-  const handleOnNext = () => {};
-
-  const handleOnPrev = () => {};
 
   return (
     <div className="container md:w-full flex bg-slate-200 dark:bg-slate-400 whitespace-nowrap items-center flex-nowrap justify-center py-4  backdrop-blur-lg drop-shadow-lg bg-opacity-40 rounded-lg border-none ring-0 ">
