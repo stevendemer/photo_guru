@@ -1,15 +1,11 @@
 import { useInfiniteQuery } from "react-query";
 import axios from "../api/axios";
-import { useState } from "react";
-import { useAtomValue, useAtom } from "jotai";
-import { postsAtom } from "atoms/postsAtom";
+import { useAtomValue } from "jotai";
 import { topicAtom } from "atoms/topicAtom";
 import { IInfinitePage } from "../shared/InfinitePage";
 
 export default function useFetchCategoryPhotos() {
   const topic = useAtomValue(topicAtom);
-  const [posts, setPosts] = useAtom(postsAtom);
-  const [photos, setPhotos] = useState([]);
 
   const fetchCategoryPhotos = async () => {
     const resp = await axios.get(

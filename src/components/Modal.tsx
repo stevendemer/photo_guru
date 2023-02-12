@@ -88,10 +88,6 @@ const Modal = ({
                   alt="profile image"
                 />
               </div>
-
-              <h2 className="text-xl font-normal capitalize leading-normal text-gray-800">
-                {result?.alt_description}
-              </h2>
             </div>
             <div className="flex-auto  overflow-y-auto relative top-2 p-4 w-full">
               <img
