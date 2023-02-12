@@ -17,9 +17,10 @@ export default function useFetchPosts() {
     },
     {
       refetchOnWindowFocus: true,
+      keepPreviousData: false,
       getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
       select: (data) => data?.pages.flatMap((page: any) => page.data),
-      staleTime: 4000,
+      staleTime: 5000,
       onError: (err: Error) =>
         toast.error(`Something went wrong ${err.message}`),
     }
