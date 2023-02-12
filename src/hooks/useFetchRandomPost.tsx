@@ -11,6 +11,5 @@ export default function useFetchRandomPhoto() {
   return useQuery<IPhoto, Error>(["random_photo"], fetchPhoto, {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
-    refetchOnReconnect: false,
   });
 }

@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { QueryClientProvider, QueryClient, QueryCache } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
@@ -10,15 +10,15 @@ import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "react-toastify/dist/ReactToastify.css";
 
-import { Suspense, ReactNode } from "react";
+import { Suspense } from "react";
 import Loader from "components/Loader";
-import { IApiError } from "./shared/IApiError";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: Infinity,
+      staleTime: 300000,
       keepPreviousData: true,
+      refetchOnWindowFocus: false,
     },
   },
   queryCache: new QueryCache({

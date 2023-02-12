@@ -60,9 +60,9 @@ const Header = () => {
             onClick={onClick}
           >
             {theme === "light" ? (
-              <BsFillMoonFill className="text-yellow-100 border-white w-14 h-6" />
+              <BsFillMoonFill className="text-yellow-100 border-white w-14 h-6 hover:text-slate-600" />
             ) : (
-              <BsSunFill className="text-yellow-100 text-xl sm:text-2xl w-14 rounded-full h-6 hover:bg-slate-100 hover:text-black" />
+              <BsSunFill className="text-yellow-100 text-xl sm:text-2xl w-14 rounded-full h-6 hover:bg-slate-100 hover:text-slate-600" />
             )}
           </span>
         </div>

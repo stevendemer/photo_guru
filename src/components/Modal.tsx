@@ -1,15 +1,11 @@
 import Image from "./Image";
-import { Dialog, Transition } from "@headlessui/react";
-import {
-  useState,
-  ReactNode,
-  useEffect,
-  SyntheticEvent,
-  Fragment,
-} from "react";
+import { Transition } from "@headlessui/react";
+import { useState, useEffect, Fragment } from "react";
 import { IPhoto } from "../shared/IPhoto";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import useClickOutside from "../hooks/useClickOutside";
+import { IoCloseOutline } from "react-icons/io5";
+import { format } from "date-fns";
 
 const Modal = ({
   onClose,
@@ -18,7 +14,7 @@ const Modal = ({
 }: {
   onClose: (x: boolean) => void;
   isOpen: boolean;
-  post: IPhoto;
+  post: IPhoto | undefined;
 }) => {
   const { ref, isVisible, setIsVisible } = useClickOutside(true);
 
@@ -44,56 +40,78 @@ const Modal = ({
     return () => document.removeEventListener("keydown", handleEsc);
   }, []);
 
+  // console.log("First tag is ", post?.tags[0].source.title);
+
   return (
     <Transition as={Fragment} show={isOpen}>
       <div
-        className="z-50 fixed top-0 left-0 w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+        className="z-50 fixed top-0 left-0 w-full h-full outline-none overflow-x-hidden overflow-y-auto backdrop-blur-sm backdrop-brightness-75 "
         tabIndex={-1}
         aria-hidden="true"
       >
+        <div className="flex absolute flex-shrink-0 flex-wrap items-center p-4  border-t border-gray-200 rounded-b-md z-[999]">
+          <button
+            type="button"
+            className="inline-block px-2  text-slate-200 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out z-[999]"
+            data-bs-dismiss="modal"
+            onClick={() => onClose(false)}
+          >
+            <IoCloseOutline className="w-10 h-10 text-slate-100" />
+          </button>
+        </div>
+
         <div className="sm:h-[calc(100%-3rem)] w-full my-6 mx-auto relative pointer-events-none">
           <div className="max-h-full min-w-[90vw] max-w-screen-lg  overflow-hidden border-none shadow-lg absolute left-1/2 -translate-x-1/2 flex flex-col pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
             <div className="flex flex-shrink-0 items-center p-4 border-b border-gray-200 rounded-t-md dark:bg-black dark:text-slate-50">
-              <div className="flex ml-10 mr-20 items-center w-auto bg-purple-700  p-2 rounded-full cursor-pointer border-2 border-white hover:border-gray-500 transition-all duration-200">
+              <div className="flex ml-10 mr-20 items-center w-auto bg-gradient-to-t from-indigo-400 to-blue-500  p-2 rounded-full cursor-pointer border-2 hover:border-slate-100 transition-all duration-200">
                 <div className="leading-8 text-center text-lg sm:text-md text-slate-50 font-regular mx-2 ">
-                  {post.user.name}
+                  {post?.user.name}
                 </div>
                 <img
                   className="rounded-full w-8 h-8 mx-4 "
-                  src={post.user.profile_image?.small}
+                  src={post?.user.profile_image?.small}
                   alt="profile image"
                 />
               </div>
 
               <h2 className="text-xl font-normal capitalize leading-normal text-gray-800">
-                {post.alt_description}
+                {post?.alt_description}
               </h2>
             </div>
             <div className="flex-auto  overflow-y-auto relative top-2 p-4 w-full">
               <img
                 className="min-w-fit max-w-screen-md object-center max-h-full rounded-lg object-contain mx-auto"
-                src={post.urls?.regular}
+                src={post?.urls?.regular}
                 alt="selected photo"
               />
               <div className="flex flex-shrink-0 items-center p-4">
                 <h2 className="text-xl text-black/50 ">
-                  Likes <span className="text-black mx-4">{post.likes}</span>
+                  Likes <span className="text-black mx-4">{post?.likes}</span>
                 </h2>
                 <h2 className="text-xl text-black/50 ">
                   Downloads{" "}
-                  <span className="text-black mx-4">{post.downloads}</span>
+                  <span className="text-black mx-4">{post?.downloads}</span>
+                </h2>
+                <h2 className="text-xl text-black/50 ">
+                  Created at{" "}
+                  <span className="text-black mx-4">
+                    {post?.created_at?.split("-").join(" ").slice(0, 10)}
+                  </span>
                 </h2>
               </div>
-            </div>
-            <div className="flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-              <button
-                type="button"
-                className="inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
-                data-bs-dismiss="modal"
-                onClick={() => onClose(false)}
-              >
-                Close
-              </button>
+              <h3 className="font-regular px-2 py-4 text-xl border-b-[1px] border-black m-2">
+                Related Tags
+              </h3>
+              <div className="flex items-center justify-evenly space-x-2 pt-2">
+                {post?.tags.map((tag, idx) => (
+                  <div
+                    key={idx}
+                    className="capitalize flex flex-wrap text-black/70 hover:text-black bg-slate-200 p-2 mb-10 rounded-md cursor-pointer font-regular"
+                  >
+                    {tag.title}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
