@@ -5,7 +5,7 @@ import { IPhoto } from "../shared/IPhoto";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import useClickOutside from "../hooks/useClickOutside";
 import { IoCloseOutline } from "react-icons/io5";
-import { format } from "date-fns";
+import useFetchSinglePost from "../hooks/useFetchPostID";
 
 const Modal = ({
   onClose,
@@ -14,9 +14,16 @@ const Modal = ({
 }: {
   onClose: (x: boolean) => void;
   isOpen: boolean;
-  post: IPhoto | undefined;
+  post: IPhoto;
 }) => {
   const { ref, isVisible, setIsVisible } = useClickOutside(true);
+
+  const {
+    data: result,
+    isLoading,
+    isError,
+    error,
+  } = useFetchSinglePost(post.id);
 
   useEffect(() => {
     if (isOpen) {
@@ -42,6 +49,14 @@ const Modal = ({
 
   // console.log("First tag is ", post?.tags[0].source.title);
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>{error.message}</div>;
+  }
+
   return (
     <Transition as={Fragment} show={isOpen}>
       <div
@@ -65,48 +80,48 @@ const Modal = ({
             <div className="flex flex-shrink-0 items-center p-4 border-b border-gray-200 rounded-t-md dark:bg-black dark:text-slate-50">
               <div className="flex ml-10 mr-20 items-center w-auto bg-gradient-to-t from-indigo-400 to-blue-500  p-2 rounded-full cursor-pointer border-2 hover:border-slate-100 transition-all duration-200">
                 <div className="leading-8 text-center text-lg sm:text-md text-slate-50 font-regular mx-2 ">
-                  {post?.user.name}
+                  {result?.user.name}
                 </div>
                 <img
                   className="rounded-full w-8 h-8 mx-4 "
-                  src={post?.user.profile_image?.small}
+                  src={result?.user.profile_image?.small}
                   alt="profile image"
                 />
               </div>
 
               <h2 className="text-xl font-normal capitalize leading-normal text-gray-800">
-                {post?.alt_description}
+                {result?.alt_description}
               </h2>
             </div>
             <div className="flex-auto  overflow-y-auto relative top-2 p-4 w-full">
               <img
                 className="min-w-fit max-w-screen-md object-center max-h-full rounded-lg object-contain mx-auto"
-                src={post?.urls?.regular}
+                src={result?.urls?.regular}
                 alt="selected photo"
               />
               <div className="flex flex-shrink-0 items-center p-4">
                 <h2 className="text-xl text-black/50 ">
-                  Likes <span className="text-black mx-4">{post?.likes}</span>
+                  Likes <span className="text-black mx-4">{result?.likes}</span>
                 </h2>
                 <h2 className="text-xl text-black/50 ">
                   Downloads{" "}
-                  <span className="text-black mx-4">{post?.downloads}</span>
+                  <span className="text-black mx-4">{result?.downloads}</span>
                 </h2>
                 <h2 className="text-xl text-black/50 ">
                   Created at{" "}
                   <span className="text-black mx-4">
-                    {post?.created_at?.split("-").join(" ").slice(0, 10)}
+                    {result?.created_at?.split("-").join(" ").slice(0, 10)}
                   </span>
                 </h2>
               </div>
               <h3 className="font-regular px-2 py-4 text-xl border-b-[1px] border-black m-2">
                 Related Tags
               </h3>
-              <div className="flex items-center justify-evenly space-x-2 pt-2">
-                {post?.tags.map((tag, idx) => (
+              <div className="flex items-center mx-2 space-x-2 pt-2 overflow-x-hidden max-w-screen-2xl">
+                {result?.tags.map((tag, idx) => (
                   <div
                     key={idx}
-                    className="capitalize flex flex-wrap text-black/70 hover:text-black bg-slate-200 p-2 mb-10 rounded-md cursor-pointer font-regular"
+                    className="capitalize min-w-fit flex-wrap flex  text-black/70 hover:text-black bg-slate-200 p-2 mb-10 rounded-md cursor-pointer font-regular"
                   >
                     {tag.title}
                   </div>
