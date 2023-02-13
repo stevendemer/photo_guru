@@ -30,7 +30,7 @@ const Image = ({ post }: { post: IPhoto }) => {
           >
             <Modal
               isOpen={isOpen}
-              onClose={() => setIsOpen(false)}
+              onClose={(x: boolean) => setIsOpen(x)}
               post={post}
             />
           </div>,

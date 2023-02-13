@@ -97,7 +97,7 @@ const Modal = ({
             </div>
             <div className="flex-auto  overflow-y-auto relative top-2 p-4 w-full">
               <img
-                className="min-w-fit max-w-screen-md object-center max-h-full rounded-lg object-contain mx-auto"
+                className="lg:min-w-fit lg:max-w-screen-md object-center max-h-full rounded-lg object-contain mx-auto"
                 src={result?.urls?.regular}
                 alt="selected photo"
               />
