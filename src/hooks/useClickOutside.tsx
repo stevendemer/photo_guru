@@ -1,35 +1,25 @@
 import React, { useState, useRef, useEffect, RefObject } from "react";
+import { SyntheticEvent } from "react";
 
 // Detects when user clicks outside of div
-const useClickOutside = (initialState: boolean) => {
-  const [isVisible, setIsVisible] = useState<boolean>(initialState);
-  const ref = useRef<any>(null);
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (ref.current && !ref.current.contains(event.currentTarget)) {
-      // clicked outside
-      setIsVisible(false);
-    }
-  };
-
+const useClickOutside = <T extends HTMLElement>(
+  ref: RefObject<T>,
+  handler: (e: MouseEvent) => void
+): void => {
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.currentTarget)) {
-        setIsVisible(false);
+    const listener = (event: MouseEvent) => {
+      if (!ref.current || ref.current.contains(event.currentTarget as Node)) {
+        return;
       }
+      handler(event);
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", listener);
+
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", listener);
     };
-  }, [ref]);
-
-  return {
-    ref,
-    isVisible,
-    setIsVisible,
-  };
+  }, [ref, handler]);
 };
 
 export default useClickOutside;

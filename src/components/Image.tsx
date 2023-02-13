@@ -26,7 +26,7 @@ const Image = ({ post }: { post: IPhoto }) => {
         createPortal(
           <div
             onBlur={() => setIsOpen(false)}
-            className="md:px-20 lg:px-28 pb-4 cursor-auto pointer-events-none"
+            className="md:px-20 lg:px-28 pb-4"
           >
             <Modal
               isOpen={isOpen}

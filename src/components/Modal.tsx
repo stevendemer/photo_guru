@@ -1,9 +1,9 @@
 import Image from "./Image";
 import { Transition } from "@headlessui/react";
-import { useState, useEffect, Fragment } from "react";
+import { useEffect, Fragment, useRef } from "react";
 import { IPhoto } from "../shared/IPhoto";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import useClickOutside from "../hooks/useClickOutside";
+import useClickOutside from "hooks/useClickOutside";
 import { IoCloseOutline } from "react-icons/io5";
 import useFetchSinglePost from "../hooks/useFetchPostID";
 
@@ -16,7 +16,7 @@ const Modal = ({
   isOpen: boolean;
   post: IPhoto;
 }) => {
-  const { ref, isVisible, setIsVisible } = useClickOutside(true);
+  const ref = useRef<HTMLDivElement>(null);
 
   const {
     data: result,
@@ -24,6 +24,13 @@ const Modal = ({
     isError,
     error,
   } = useFetchSinglePost(post.id);
+
+  const handleClickOutside = (e: MouseEvent) => {
+    console.log("Clicked outside");
+    onClose(false);
+  };
+
+  useClickOutside(ref, handleClickOutside);
 
   useEffect(() => {
     if (isOpen) {
@@ -47,8 +54,6 @@ const Modal = ({
     return () => document.removeEventListener("keydown", handleEsc);
   }, []);
 
-  // console.log("First tag is ", post?.tags[0].source.title);
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -63,15 +68,16 @@ const Modal = ({
         className="z-50 fixed top-0 left-0 w-full h-full outline-none overflow-x-hidden overflow-y-auto backdrop-blur-sm backdrop-brightness-75 "
         tabIndex={-1}
         aria-hidden="true"
+        ref={ref}
       >
-        <div className="flex absolute flex-shrink-0 flex-wrap items-center p-4  border-t border-gray-200 rounded-b-md z-[999]">
+        <div className="flex relative flex-shrink-0 flex-wrap items-center p-4  border-t border-gray-200 rounded-b-md z-[999]">
           <button
             type="button"
-            className="inline-block px-2  text-slate-200 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out z-[999]"
+            className="inline-block px-2  text-slate-200 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out "
             data-bs-dismiss="modal"
             onClick={() => onClose(false)}
           >
-            <IoCloseOutline className="w-10 h-10 text-slate-100" />
+            <IoCloseOutline className="w-10 h-10 text-slate-100 absolute z-[9999]" />
           </button>
         </div>
 
