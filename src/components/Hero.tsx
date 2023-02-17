@@ -35,10 +35,10 @@ const Hero = () => {
         <div className="w-full absolute top-0">
           <div className="font-heading px-4 py-8 mx-auto lg:py-20 text-slate-50 relative min-w-full flex flex-col items-center">
             <div className="mt-10">
-              <h1 className="w-full mb-4 text-2xl font-extrabold tracking-tight leading-none lg:text-5xl dark:text-slate-100 whitespace-nowrap">
+              <h1 className="w-full mb-4 text-2xl font-heading tracking-tight leading-none lg:text-5xl dark:text-slate-100 whitespace-nowrap">
                 {title}
               </h1>
-              <p className="max-w-2xl text-lg text-slate-100 lg:mb-2 lg:text-xl dark:text-slate-300">
+              <p className="max-w-2xl text-lg text-slate-100 lg:mb-2 lg:text-xl dark:text-slate-300 font-body">
                 {subtitle}
               </p>
             </div>

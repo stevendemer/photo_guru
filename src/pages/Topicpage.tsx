@@ -6,11 +6,19 @@ import { getCategories } from "../api/axios";
 import { topicAtom } from "atoms/topicAtom";
 import useFetchCategoryPhotos from "../hooks/useFetchCategories";
 import Loader from "components/Loader";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const Topicpage = () => {
-  const { data, isLoading, error, isError } = useFetchCategoryPhotos();
+  const {
+    data: topics,
+    isLoading,
+    error,
+    isError,
+    hasNextPage,
+    fetchNextPage,
+  } = useFetchCategoryPhotos();
 
-  console.log("Data from categories", data);
+  console.log("Data from categories", topics);
 
   useEffect(() => {
     document.title = "Guru - Topics";
@@ -35,7 +43,13 @@ const Topicpage = () => {
   return (
     <>
       <div className="px-4 py-8 w-full">
-        <PhotoGrid isLoading={isLoading} posts={data} />
+        <InfiniteScroll
+          dataLength={topics.length}
+          loader={<div>Loading...</div>}
+          next={() => fetchNextPage()}
+        >
+          <PhotoGrid isLoading={isLoading} posts={topics} />
+        </InfiniteScroll>
       </div>
     </>
   );

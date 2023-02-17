@@ -27,7 +27,7 @@ const Header = () => {
   };
 
   return (
-    <div className="w-full bg-slate-100 dark:bg-gray-800">
+    <div className="w-full bg-slate-200 drop-shadow-lg dark:bg-gray-800">
       <div className="mx-auto py-6 flex  items-center container flex-wrap relative ">
         <div className="sm:text-xl  ml-2 text-xs whitespace-nowrap flex justify-around space-x-4 items-center">
           <Link

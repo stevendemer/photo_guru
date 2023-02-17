@@ -5,7 +5,8 @@ import { useAtom } from "jotai";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { queryAtom } from "atoms/queryAtom";
 import { topicAtom } from "atoms/topicAtom";
-import { queryClient } from "../main";
+import { titleAtom } from "atoms/titleAtom";
+import { subtitleAtom } from "atoms/titleAtom";
 
 const Homepage = () => {
   const [queries, setQueries] = useAtom(queryAtom);
@@ -22,11 +23,15 @@ const Homepage = () => {
 
   // when element is in view port then fetch next
   const [isVisible, setIsVisible] = useState(false);
+  const [title, setTitle] = useAtom(titleAtom);
+  const [subtitle, setSubtitle] = useAtom(subtitleAtom);
 
   useEffect(() => {
     document.title = "Photo Guru";
     setQueries([]);
     setTopic(undefined);
+    setTitle("Welcome to Photo Guru");
+    setSubtitle("Internet's biggest source of 4K photos");
   }, []);
 
   if (isLoading) {

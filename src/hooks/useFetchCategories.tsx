@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useInfiniteQuery } from "react-query";
 import axios from "../api/axios";
 import { useAtomValue } from "jotai";
 import { topicAtom } from "atoms/topicAtom";
@@ -6,19 +6,23 @@ import { topicAtom } from "atoms/topicAtom";
 export default function useFetchCategoryPhotos() {
   const topic = useAtomValue(topicAtom);
 
-  return useQuery(
+  return useInfiniteQuery(
     ["categories"],
     async ({ pageParam = 1 }) => {
       const resp = await axios.get(
         `topics/${topic}/photos?page=${pageParam}&per_page=25`
       );
-      return resp.data;
+      return {
+        data: resp.data,
+        nextPage: pageParam + 1,
+      };
     },
     {
       refetchOnMount: true,
       refetchOnWindowFocus: true,
       keepPreviousData: false,
       enabled: Boolean(topic),
+      onSuccess: (data) => console.log("Data is ", data),
     }
   );
 }

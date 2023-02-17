@@ -190,7 +190,7 @@ const Modal = ({
                   {result?.tags.map((tag, idx) => (
                     <div
                       key={idx}
-                      className="capitalize w-fit flex flex-wrap flex-shrink whitespace-nowrap text-slate-300 dark:text-slate-600 hover:text-slate-100 bg-gray-500 dark:bg-gray-200 px-4 py-2 mb-10 rounded-md cursor-pointer font-regular"
+                      className="capitalize w-fit flex flex-wrap flex-shrink whitespace-nowrap text-slate-600 dark:text-slate-400 bg-gray-200 dark:bg-gray-600 dark:hover:text-slate-100 px-4 py-2 mb-10 rounded-lg cursor-pointer font-regular"
                     >
                       {tag.title}
                     </div>
