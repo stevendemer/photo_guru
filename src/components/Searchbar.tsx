@@ -55,7 +55,7 @@ const Searchbar = () => {
   return (
     <form
       onSubmit={onSubmit}
-      className="text-black my-10 justify-center items-center lg:flex w-full absolute hidden"
+      className="text-black my-4 justify-center items-center lg:flex w-full absolute hidden"
     >
       <span className="flex bg-white  py-2 justify-around rounded-lg sm:container ">
         <button className="opacity-60 text-black font-extrabold px-2 outline-none hover:outline-2 hover:opacity-95">

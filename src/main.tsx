@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { QueryClientProvider, QueryClient, QueryCache } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { queryClientAtom } from "jotai-tanstack-query";
-import { Provider, useAtom } from "jotai";
+import { Provider } from "jotai";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,12 +13,15 @@ import "react-toastify/dist/ReactToastify.css";
 import { Suspense } from "react";
 import Loader from "components/Loader";
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 300000,
+      staleTime: 1000 * 60 * 60 * 24,
       keepPreviousData: true,
+      retry: false,
       refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
     },
   },
   queryCache: new QueryCache({

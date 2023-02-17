@@ -32,14 +32,16 @@
     }
     .link-underline {
       border-bottom-width: 0;
-      background-image: linear-gradient(transparent, transparent), linear-gradient(#fff, #fff);
+      background-image: linear-gradient(transparent, transparent),
+        linear-gradient(#fff, #fff);
       background-size: 0 1px;
       background-position: 0 100%;
       background-repeat: no-repeat;
       transition: background-size 0.2s ease-in-out;
     }
     .link-underline-black {
-      background-image: linear-gradient(transparent, transparent), linear-gradient(#F2C, #F2C)
+      background-image: linear-gradient(transparent, transparent),
+        linear-gradient(#f2c, #f2c);
     }
     .link-underline:hover {
       background-size: 100% 1px;
@@ -53,15 +55,14 @@ body {
   padding: 0;
   margin: 0;
   scroll-behavior: smooth;
-  overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {
-  width: 16px;
+  width: 8px;
   height: 22px;
   background-color: rgb(168, 158, 158);
 }
- 
+
 ::-webkit-scrollbar-thumb {
   background-color: rgb(84, 75, 75);
   height: 120px;

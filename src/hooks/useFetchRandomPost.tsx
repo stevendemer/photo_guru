@@ -9,7 +9,9 @@ export default function useFetchRandomPhoto() {
   };
 
   return useQuery<IPhoto, Error>(["random_photo"], fetchPhoto, {
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
+    retry: true,
+    staleTime: 1000 * 20 * 60,
   });
 }

@@ -4,7 +4,6 @@ import { IPhoto } from "../shared/IPhoto";
 import { IoCloseOutline } from "react-icons/io5";
 import useFetchSinglePost from "../hooks/useFetchPostID";
 import { AnimatePresence, motion } from "framer-motion";
-import { useSearchParams, useLocation } from "react-router-dom";
 import { useOnClickOutside } from "usehooks-ts";
 
 const Modal = ({
@@ -17,6 +16,8 @@ const Modal = ({
   onToggle: () => void;
 }) => {
   const ref = useRef<HTMLDivElement | null>(null);
+
+  useOnClickOutside(ref, () => onToggle());
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -76,7 +77,6 @@ const Modal = ({
         open={isOpen}
         initial="hidden"
         animate="show"
-        ref={ref}
       >
         <div
           id="modal"
@@ -144,7 +144,10 @@ const Modal = ({
             </button>
           </div>
 
-          <div className="sm:h-[calc(100%-3rem)] w-full my-6 mx-auto relative pointer-events-none ">
+          <div
+            ref={ref}
+            className="sm:h-[calc(100%-3rem)] w-full my-6 mx-auto relative pointer-events-none "
+          >
             <div className="max-h-full min-w-[90vw] max-w-screen-lg overflow-hidden border-none shadow-lg absolute left-1/2 -translate-x-1/2 flex flex-col pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
               <div className="flex flex-shrink-0 items-center p-4 border-b-2 border-gray-300 rounded-t-md dark:bg-slate-800 dark:text-slate-50">
                 <div className="flex ml-10 mr-20 items-center w-auto bg-gradient-to-t from-indigo-400 to-blue-500 p-2 rounded-full cursor-pointer border-2 hover:border-slate-800 transition-all duration-200">

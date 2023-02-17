@@ -5,19 +5,37 @@ import { useAtom } from "jotai";
 import { topicAtom } from "atoms/topicAtom";
 import useFetchCategoryPhotos from "../hooks/useFetchCategories";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
+import { fetchTopics } from "api/fetchPhotos";
+import { titleAtom, subtitleAtom } from "../atoms/titleAtom";
 
-const Carousel = ({ topics }: { topics?: ITopic[] }) => {
+const Carousel = () => {
   const [currentIdx, setCurrentIdx] = useState<number>(0);
   const [active, setActive] = useState<boolean>(false);
   const [topic, setTopic] = useAtom(topicAtom);
   const [currentTopic, setCurrentTopic] = useState<string | undefined>(
     undefined
   );
+  const [title, setTitle] = useAtom(titleAtom);
+  const [subtitle, setSubtitle] = useAtom(subtitleAtom);
+
   const navigate = useNavigate();
+
+  const {
+    data: topics,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<ITopic[], Error>({
+    queryKey: ["categories"],
+    queryFn: async () => fetchTopics(),
+  });
 
   const handleClick = (topic: ITopic) => {
     setActive(!active);
     setTopic(topic.slug);
+    setTitle(topic.title);
+    setSubtitle(topic.description);
     navigate(`/t/${topic.slug}`);
     // console.log("Current topic is ", topic);
   };
@@ -42,7 +60,7 @@ const Carousel = ({ topics }: { topics?: ITopic[] }) => {
                   <div
                     className={`sm:text-sm border-none delay-100 ring-0 inset-0 text-xs decoration-slate-200 underline-offset-8 decoration-2  text-gray-50  mx-2 cursor-pointer transition-all rounded-full p-2 duration-100 link link-underline ${
                       topic !== undefined && selected
-                        ? "bg-slate-50 text-gray-600 p-2 drop-shadow-xl backdrop-blur-lg"
+                        ? "bg-slate-50 text-gray-600 p-2 drop-shadow-2xl backdrop-blur-lg"
                         : null
                     }`}
                   >

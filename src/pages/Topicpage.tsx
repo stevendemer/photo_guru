@@ -1,26 +1,16 @@
 import { useEffect, useState } from "react";
 import { useAtomValue } from "jotai";
-import InfiniteScroll from "react-infinite-scroll-component";
 import PhotoGrid from "components/PhotoGrid";
 import { useQuery, useInfiniteQuery, InfiniteData } from "react-query";
 import { getCategories } from "../api/axios";
 import { topicAtom } from "atoms/topicAtom";
-import { IPhoto } from "../shared/IPhoto";
+import useFetchCategoryPhotos from "../hooks/useFetchCategories";
+import Loader from "components/Loader";
 
 const Topicpage = () => {
-  const topic = useAtomValue(topicAtom);
-  const [posts, setPosts] = useState([]);
+  const { data, isLoading, error, isError } = useFetchCategoryPhotos();
 
-  const { data, isError, error, isLoading } = useQuery<IPhoto[], Error>(
-    ["categories", topic],
-    async () => getCategories(topic),
-    {
-      refetchOnMount: false,
-      staleTime: 4000,
-      refetchOnWindowFocus: true,
-      enabled: !!topic,
-    }
-  );
+  console.log("Data from categories", data);
 
   useEffect(() => {
     document.title = "Guru - Topics";

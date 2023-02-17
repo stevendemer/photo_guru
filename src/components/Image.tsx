@@ -4,7 +4,6 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useState } from "react";
 import Modal from "./Modal";
 import { IPhoto } from "shared/IPhoto";
-import { modalAtom } from "../atoms/modalAtom";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 const Image = ({ post }: { post: IPhoto }) => {
