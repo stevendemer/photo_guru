@@ -1,9 +1,6 @@
 import { atom, useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
-export const queryAtom = atomWithStorage<string[] | undefined>(
-  "query",
-  undefined
-);
+export const queryAtom = atomWithStorage<string[]>("queries", []);
 
 queryAtom.debugLabel = "query_atom";

@@ -6,12 +6,12 @@ import { QueryClientProvider, QueryClient, QueryCache } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { queryClientAtom } from "jotai-tanstack-query";
 import { Provider } from "jotai";
-import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "react-toastify/dist/ReactToastify.css";
 
-import { Suspense } from "react";
-import Loader from "components/Loader";
+import { Suspense, lazy } from "react";
+
+const Spinner = lazy(() => import("components/Spinner"));
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,6 +22,7 @@ export const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
+      suspense: true,
     },
   },
   queryCache: new QueryCache({
@@ -39,13 +40,11 @@ const el = document.getElementById("root") as HTMLElement;
 const root = ReactDOM.createRoot(el);
 
 root.render(
-  <Suspense fallback={<Loader />}>
+  <Suspense fallback={<Spinner />}>
     <QueryClientProvider client={queryClient}>
       <Router>
         <Provider initialValues={[[queryClientAtom, queryClient]]}>
-          <SkeletonTheme baseColor="#202020" highlightColor="#444">
-            <App />
-          </SkeletonTheme>
+          <App />
         </Provider>
         <ToastContainer />
       </Router>

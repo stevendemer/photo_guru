@@ -5,7 +5,7 @@ import { Suspense } from "react";
 
 const Layout = lazy(() => import("components/Layout"));
 const Homepage = lazy(() => import("pages/Homepage"));
-const Loader = lazy(() => import("components/Loader"));
+const Loader = lazy(() => import("components/Spinner"));
 const Searchpage = lazy(() => import("pages/Searchpage"));
 const Topicpage = lazy(() => import("pages/Topicpage"));
 

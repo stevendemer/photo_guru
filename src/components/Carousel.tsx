@@ -41,7 +41,7 @@ const Carousel = () => {
   };
 
   return (
-    <div className="w-full sm:flex-col bg-gray-500 dark:bg-slate-800 border-t-[1px] border-white flex items-center py-4 ring-0">
+    <div className="w-full sm:flex-col bg-slate-500 bg-opacity-50 drop-shadow-xl dark:bg-slate-800 border-t-[1px] border-white flex items-center py-4 ring-0">
       <Tab.Group
         selectedIndex={currentIdx}
         onChange={setCurrentIdx}
@@ -60,7 +60,7 @@ const Carousel = () => {
                   <div
                     className={`sm:text-sm border-none delay-100 ring-0 inset-0 text-xs decoration-slate-200 underline-offset-8 decoration-2  text-gray-50  mx-2 cursor-pointer transition-all rounded-full p-2 duration-100 link link-underline ${
                       topic !== undefined && selected
-                        ? "text-gray-600 p-2 drop-shadow-2xl backdrop-blur-xl bg-white bg-opacity-70 w-full"
+                        ? "text-gray-600 p-2 drop-shadow-xl backdrop-blur-md bg-slate-50 bg-opacity-80 w-full"
                         : null
                     }`}
                   >

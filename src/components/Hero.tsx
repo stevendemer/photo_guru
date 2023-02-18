@@ -14,16 +14,6 @@ const Hero = () => {
     return <div>{error.message}</div>;
   }
 
-  if (isLoading) {
-    return (
-      <div className="bg-cover relative overflow-hidden">
-        <div className="bg-no-repeat object-cover max-h-[620px] min-w-full">
-          <Skeleton count={1} />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <section className="w-full min-w-[768px] sm:h-[420px] min-h-[768px] relative mx-auto">
       <div className="mx-auto object-none h-full">

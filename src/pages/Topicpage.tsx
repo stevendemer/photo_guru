@@ -5,7 +5,7 @@ import { useQuery, useInfiniteQuery, InfiniteData } from "react-query";
 import { getCategories } from "../api/axios";
 import { topicAtom } from "atoms/topicAtom";
 import useFetchCategoryPhotos from "../hooks/useFetchCategories";
-import Loader from "components/Loader";
+import Loader from "components/Spinner";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const Topicpage = () => {

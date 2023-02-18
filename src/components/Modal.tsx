@@ -1,5 +1,5 @@
 import { Dialog } from "@headlessui/react";
-import { useEffect, Fragment, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { IPhoto } from "../shared/IPhoto";
 import { IoCloseOutline } from "react-icons/io5";
 import useFetchSinglePost from "../hooks/useFetchPostID";
@@ -16,9 +16,11 @@ const Modal = ({
   onToggle: () => void;
 }) => {
   const ref = useRef<HTMLDivElement | null>(null);
+  const [clicked, setClicked] = useState<boolean>(false);
 
-  useOnClickOutside(ref, () => onToggle());
+  useOnClickOutside(ref, () => onToggle()); // close modal when clicked outside of it
 
+  // disable scrolling when modal is open
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
@@ -32,23 +34,21 @@ const Modal = ({
     isError,
     error,
   } = useFetchSinglePost(post.id);
+
   // close the modal when Esc is pressed
   useEffect(() => {
     function handleEsc(event: KeyboardEvent) {
       if (event.key === "Escape") {
         onToggle();
+        setClicked(false);
       }
     }
-    document.addEventListener("keydown", handleEsc);
+    document.addEventListener("keydown", handleEsc, false);
 
     return () => {
-      document.removeEventListener("keydown", handleEsc);
+      document.removeEventListener("keydown", handleEsc, false);
     };
   }, []);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   if (isError) {
     return <div>{error.message}</div>;
@@ -84,55 +84,6 @@ const Modal = ({
           tabIndex={-1}
           aria-hidden="true"
         >
-          <button
-            type="button"
-            className="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-            data-carousel-prev
-          >
-            <span className="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/10 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60  dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-              <svg
-                aria-hidden="true"
-                className="w-5 h-5 text-slate-50 sm:w-6 sm:h-6 "
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15 19l-7-7 7-7"
-                ></path>
-              </svg>
-              <span className="sr-only">Previous</span>
-            </span>
-          </button>
-          <button
-            type="button"
-            className="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-            data-carousel-next
-          >
-            <span className="inline-flex  items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/10 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:outline-none">
-              <svg
-                aria-hidden="true"
-                className="w-5 h-5 text-slate-50 sm:w-6 sm:h-6 0"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 5l7 7-7 7"
-                ></path>
-              </svg>
-              <span className="sr-only">Next</span>
-            </span>
-          </button>
-
           <div className="flex relative flex-shrink-0 flex-wrap items-center p-4  border-t border-gray-200 rounded-b-md z-50">
             <button
               type="button"
@@ -158,14 +109,18 @@ const Modal = ({
                     className="rounded-full w-8 h-8 mx-4 "
                     src={result?.user.profile_image?.small}
                     alt="profile image"
+                    onClick={() => setClicked(false)}
                   />
                 </div>
               </div>
               <div className="overflow-y-auto relative top-0 p-4 dark:bg-slate-800 dark:text-slate-50">
                 <img
-                  className="rounded-xl mx-auto h-auto max-w-lg"
+                  className={`rounded-xl mx-auto h-auto max-w-lg cursor-zoom-in ${
+                    clicked && "scale-110"
+                  }`}
                   src={result?.urls?.regular}
                   alt="selected photo"
+                  onClick={() => setClicked(true)}
                 />
                 <div className="flex flex-shrink-0 items-center p-2 dark:text-slate-100 text-slate-800">
                   <h2 className="text-xl ">

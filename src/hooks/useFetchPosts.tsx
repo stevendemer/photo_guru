@@ -7,10 +7,10 @@ import {
 } from "react-query";
 import axios from "../api/axios";
 import { IPhoto } from "../shared/IPhoto";
+import { atomsWithInfiniteQuery } from "jotai-tanstack-query";
+import { atom, useAtom } from "jotai";
 
 export default function useFetchPosts() {
-  const queryClient = useQueryClient();
-
   return useInfiniteQuery(
     ["posts"],
     async ({ pageParam = 1 }) => {

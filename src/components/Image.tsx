@@ -4,29 +4,41 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useState } from "react";
 import Modal from "./Modal";
 import { IPhoto } from "shared/IPhoto";
+import { debounce } from "lodash";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import Masonry from "react-responsive-masonry";
 
 const Image = ({ post }: { post: IPhoto }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hovered, setHovered] = useState(false);
 
+  // change brightness and show username after 200ms to avoid flickering
+  const debounceHandler = debounce(() => setHovered(true), 200);
+
   const onToggle = () => {
     setIsOpen((prev) => !prev);
   };
 
+  const onMouseLeave = () => {
+    setHovered(false);
+    debounceHandler.cancel();
+  };
+
   return (
-    <div className="py-4 space-x-2 cursor-pointer relative  hover:drop-shadow-2xl shadow-slate-50 transition-all duration-300 delay-100 hover:scale-105 hover:translate-2  drop-shadow-xl">
+    <div className="py-4 px-2 cursor-pointer relative  hover:drop-shadow-2xl shadow-slate-50 transition-all duration-300 delay-100 hover:scale-105 hover:translate-2  drop-shadow-xl">
       <div className="container relative transition-all duration-200">
         {hovered && (
-          <div className="w-full z-50 absolute left-4 bottom-4 text-slate-50">
+          <div className="w-full z-50 absolute left-4 bottom-4 text-slate-50 ">
             {post.user.name}{" "}
           </div>
         )}
         <LazyLoadImage
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
+          onMouseEnter={debounceHandler}
+          onMouseLeave={onMouseLeave}
           onClick={() => setIsOpen(true)}
-          className="rounded-lg aspect-auto hover:brightness-75"
+          className={`rounded-lg aspect-auto h-full w-full ${
+            hovered && "brightness-75"
+          }`}
           src={post?.urls?.regular}
           alt="photo alt"
           effect="blur"

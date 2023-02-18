@@ -1,5 +1,7 @@
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Combobox, Transition } from "@headlessui/react";
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
-import axios from "../api/axios";
 import { useAtom, useSetAtom } from "jotai";
 import { postsAtom } from "atoms/postsAtom";
 import { queryAtom } from "atoms/queryAtom";
@@ -9,19 +11,21 @@ import {
   useNavigate,
   useSearchParams,
 } from "react-router-dom";
-import { useInfiniteQuery, useIsFetching } from "react-query";
+import { z } from "zod";
 
 type IProps = {
   setSearchTerm: () => void;
 };
 
-type Inputs = {
-  searchTerm: string;
-};
+const schema = z
+  .string()
+  .min(3, { message: "Query must be at least 3 characters long" });
+
+type Input = z.infer<typeof schema>;
 
 const Searchbar = () => {
-  const [value, setValue] = useState<string>("");
   const setPosts = useSetAtom(postsAtom);
+  const [value, setValue] = useState<string>("");
   const [queries, setQueries] = useAtom(queryAtom);
   const { status, refetch, fetchNextPage, hasNextPage } = useSearchPost();
 
@@ -52,12 +56,19 @@ const Searchbar = () => {
     setValue(e.currentTarget.value);
   };
 
+  const filteredQueries =
+    value === ""
+      ? queries
+      : queries.filter((query) => {
+          return query.toLowerCase().trim().includes(value.toLowerCase());
+        });
+
   return (
     <form
       onSubmit={onSubmit}
       className="text-black my-4 justify-center items-center lg:flex w-full absolute hidden"
     >
-      <span className="flex bg-white  py-2 justify-around rounded-lg sm:container ">
+      <span className="flex bg-white  py-2 justify-around rounded-lg sm:w-1/2 ">
         <button className="opacity-60 text-black font-extrabold px-2 outline-none hover:outline-2 hover:opacity-95">
           <svg
             xmlns="http://www.w3.org/2000/svg"

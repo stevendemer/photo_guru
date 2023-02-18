@@ -7,6 +7,8 @@ import { queryAtom } from "atoms/queryAtom";
 import { topicAtom } from "atoms/topicAtom";
 import { titleAtom } from "atoms/titleAtom";
 import { subtitleAtom } from "atoms/titleAtom";
+import Spinner from "components/Spinner";
+import { IPhoto } from "../shared/IPhoto";
 
 const Homepage = () => {
   const [queries, setQueries] = useAtom(queryAtom);
@@ -35,7 +37,7 @@ const Homepage = () => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   if (isError) {
@@ -45,9 +47,10 @@ const Homepage = () => {
   return (
     <div className="px-4 py-8 w-full ">
       <InfiniteScroll
-        hasMore={hasNextPage}
+        hasMore={hasNextPage ?? false}
         endMessage={<p>End of page</p>}
-        dataLength={posts.length}
+        dataLength={isSuccess && posts.length}
+        loader={<Spinner />}
         next={() => fetchNextPage()}
       >
         <PhotoGrid isLoading={isLoading} posts={posts} />

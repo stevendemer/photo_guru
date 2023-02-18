@@ -4,14 +4,14 @@ import { useAtomValue } from "jotai";
 import { queryAtom } from "atoms/queryAtom";
 
 export default function useSearchPost() {
-  const query = useAtomValue(queryAtom);
+  const queries = useAtomValue(queryAtom);
 
   return useInfiniteQuery(
-    ["search_posts", query],
+    ["search_posts", queries],
     async ({ pageParam = 1 }) => {
-      if (query !== undefined) {
+      if (queries.length > 0) {
         const resp = await axios.get(
-          `search/photos?page=${pageParam}&per_page=25&query=${query[0]}`
+          `search/photos?page=${pageParam}&per_page=25&query=${queries[0]}`
         );
         return {
           data: resp.data,
@@ -24,7 +24,7 @@ export default function useSearchPost() {
       refetchOnWindowFocus: true,
       getNextPageParam: (lastPage) => lastPage?.nextPage ?? undefined,
       cacheTime: 40000,
-      enabled: Boolean(query),
+      enabled: queries.length > 0,
       select: (data: any) => {
         const flatten = data.pages
           .flatMap((page: any) => page.data)
