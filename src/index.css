@@ -60,11 +60,11 @@ body {
 ::-webkit-scrollbar {
   width: 8px;
   height: 22px;
-  background-color: rgb(168, 158, 158);
+  background-color: rgb(27, 25, 25);
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgb(84, 75, 75);
+  background-color: rgb(255, 255, 255);
   height: 120px;
 }
 

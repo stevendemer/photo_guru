@@ -116,11 +116,11 @@ const Modal = ({
               <div className="overflow-y-auto relative top-0 p-4 dark:bg-slate-800 dark:text-slate-50">
                 <img
                   className={`rounded-xl mx-auto h-auto max-w-lg cursor-zoom-in ${
-                    clicked && "scale-110"
+                    clicked && "max-w-screen-2xl w-full bg-cover "
                   }`}
                   src={result?.urls?.regular}
                   alt="selected photo"
-                  onClick={() => setClicked(true)}
+                  onClick={() => setClicked((prev) => !prev)}
                 />
                 <div className="flex flex-shrink-0 items-center p-2 dark:text-slate-100 text-slate-800">
                   <h2 className="text-xl ">
