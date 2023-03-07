@@ -13,7 +13,7 @@ const Image = ({ post }: { post: IPhoto }) => {
   const [hovered, setHovered] = useState(false);
 
   // change brightness and show username after 200ms to avoid flickering
-  const debounceHandler = debounce(() => setHovered(true), 200);
+  const debounceHandler = debounce(() => setHovered(true), 100);
 
   const onToggle = () => {
     setIsOpen((prev) => !prev);
@@ -25,8 +25,8 @@ const Image = ({ post }: { post: IPhoto }) => {
   };
 
   return (
-    <div className="py-4 px-2 cursor-pointer relative  hover:drop-shadow-2xl shadow-slate-50 transition-all duration-300 delay-100 hover:scale-105 hover:translate-2  drop-shadow-xl">
-      <div className="container relative transition-all duration-200">
+    <div className="py-4 px-2 cursor-pointer transition-all duration-150 delay-75 relative  hover:drop-shadow-2xl shadow-slate-50 hover:scale-105 hover:translate-2 drop-shadow-xl">
+      <div className="container relative">
         {hovered && (
           <div className="w-full z-50 absolute left-4 bottom-4 text-slate-50 ">
             {post.user.name}{" "}
@@ -36,8 +36,8 @@ const Image = ({ post }: { post: IPhoto }) => {
           onMouseEnter={debounceHandler}
           onMouseLeave={onMouseLeave}
           onClick={() => setIsOpen(true)}
-          className={`rounded-lg aspect-auto h-full w-full ${
-            hovered && "brightness-75"
+          className={`rounded-lg aspect-auto h-full w-full brightness-75 ${
+            hovered && "brightness-90"
           }`}
           src={post?.urls?.regular}
           alt="photo alt"

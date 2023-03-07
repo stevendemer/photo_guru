@@ -16,12 +16,9 @@ const Spinner = lazy(() => import("components/Spinner"));
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 60 * 24,
+      staleTime: Infinity,
       keepPreviousData: true,
       retry: false,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
       suspense: true,
     },
   },

@@ -5,11 +5,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&family=Roboto:wght@100;400&display=swap");
 
 @layer utilities {
-  @variants responsive {
+  @variants {
     .masonry {
-      column-gap: 1.5em;
-      column-count: 1;
-      grid-auto-rows: minmax(1fr, auto);
+      display: grid;
+      grid-gap: 10px;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-auto-rows: 0;
+    }
+    .masonry-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
     }
     .masonry-sm {
       column-gap: 1.5em;
@@ -58,14 +64,31 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 0.7rem;
   height: 22px;
-  background-color: rgb(27, 25, 25);
+  /* background-color: rgb(134, 123, 123); */
+  background-color: white;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgb(255, 255, 255);
-  height: 120px;
+  height: 8rem;
+  /* background: rgb(42, 169, 221);
+  background: linear-gradient(
+    90deg,
+    rgba(42, 169, 221, 1) 0%,
+    rgba(15, 227, 61, 1) 40%,
+    rgba(25, 190, 223, 1) 100%
+  ); */
+  background-color: black;
+  border-radius: 70px;
+}
+
+::-webkit-scrollbar-track-piece {
+  border-radius: 70px;
+}
+
+::webkit-scrollbar-track {
+  border-radius: 10px;
 }
 
 h2 {

@@ -1,24 +1,30 @@
 import { useEffect, useState } from "react";
-import { useAtomValue } from "jotai";
 import PhotoGrid from "components/PhotoGrid";
 import { useQuery, useInfiniteQuery, InfiniteData } from "react-query";
-import { getCategories } from "../api/axios";
 import { topicAtom } from "atoms/topicAtom";
-import useFetchCategoryPhotos from "../hooks/useFetchCategories";
-import Loader from "components/Spinner";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { useAtomValue } from "jotai";
+import { IPhoto } from "shared/IPhoto";
+import { getCategories } from "api/axios";
 
 const Topicpage = () => {
+  const topic = useAtomValue(topicAtom);
   const {
-    data: topics,
-    isLoading,
-    error,
+    data: posts,
     isError,
-    hasNextPage,
-    fetchNextPage,
-  } = useFetchCategoryPhotos();
+    error,
+    isLoading,
+  } = useQuery<IPhoto[], Error>(
+    ["categories", topic],
+    async () => getCategories(topic),
+    {
+      refetchOnMount: false,
+      refetchOnWindowFocus: true,
+      enabled: !!topic,
+      onSuccess: (data) => console.log("Data is ", data),
+    }
+  );
 
-  console.log("Data from categories", topics);
+  console.log("Data from categories", posts);
 
   useEffect(() => {
     document.title = "Guru - Topics";
@@ -43,13 +49,7 @@ const Topicpage = () => {
   return (
     <>
       <div className="px-4 py-8 w-full">
-        <InfiniteScroll
-          dataLength={topics.length}
-          loader={<div>Loading...</div>}
-          next={() => fetchNextPage()}
-        >
-          <PhotoGrid isLoading={isLoading} posts={topics} />
-        </InfiniteScroll>
+        <PhotoGrid isLoading={isLoading} posts={posts} />
       </div>
     </>
   );

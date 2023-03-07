@@ -1,13 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 import { lazy } from "react";
-import { SkeletonTheme } from "react-loading-skeleton";
-import { Suspense } from "react";
 
 const Layout = lazy(() => import("components/Layout"));
-const Homepage = lazy(() => import("pages/Homepage"));
 const Loader = lazy(() => import("components/Spinner"));
 const Searchpage = lazy(() => import("pages/Searchpage"));
 const Topicpage = lazy(() => import("pages/Topicpage"));
+const Homepage = lazy(() => import("pages/Homepage"));
 
 import "./index.css";
 

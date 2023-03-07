@@ -4,4 +4,5 @@ export interface IInfinitePage {
   nextPage: number | undefined;
   data: IPhoto[];
   hasMore: boolean;
+  pageParam: number;
 }

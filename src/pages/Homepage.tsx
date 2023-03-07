@@ -1,5 +1,4 @@
 import PhotoGrid from "components/PhotoGrid";
-import useFetchPosts from "hooks/useFetchPosts";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useAtom } from "jotai";
 import { useEffect, useState, useRef, useCallback } from "react";
@@ -8,23 +7,14 @@ import { topicAtom } from "atoms/topicAtom";
 import { titleAtom } from "atoms/titleAtom";
 import { subtitleAtom } from "atoms/titleAtom";
 import Spinner from "components/Spinner";
-import { IPhoto } from "../shared/IPhoto";
+import useGetInfinitePhotos from "hooks/useFetchPosts";
 
 const Homepage = () => {
   const [queries, setQueries] = useAtom(queryAtom);
   const [topic, setTopic] = useAtom(topicAtom);
-  const {
-    data: posts,
-    isLoading,
-    hasNextPage,
-    error,
-    isSuccess,
-    isError,
-    fetchNextPage,
-  } = useFetchPosts();
+  const postsQuery = useGetInfinitePhotos(["posts"]);
 
   // when element is in view port then fetch next
-  const [isVisible, setIsVisible] = useState(false);
   const [title, setTitle] = useAtom(titleAtom);
   const [subtitle, setSubtitle] = useAtom(subtitleAtom);
 
@@ -36,24 +26,28 @@ const Homepage = () => {
     setSubtitle("Internet's biggest source of 4K photos");
   }, []);
 
-  if (isLoading) {
+  if (postsQuery.isLoading) {
     return <Spinner />;
   }
 
-  if (isError) {
-    error instanceof Error && <div>{error.message}</div>;
+  if (postsQuery.isError) {
+    return <div>Error: {postsQuery.error.message}</div>;
+  }
+
+  if (postsQuery.isSuccess) {
+    console.log(postsQuery.data);
   }
 
   return (
     <div className="px-4 py-8 w-full ">
       <InfiniteScroll
-        hasMore={hasNextPage ?? false}
-        endMessage={<p>End of page</p>}
-        dataLength={isSuccess && posts.length}
+        hasMore={postsQuery.hasNextPage ?? false}
+        endMessage={<p>End of the page</p>}
+        dataLength={postsQuery.data.length}
         loader={<Spinner />}
-        next={() => fetchNextPage()}
+        next={() => postsQuery.fetchNextPage()}
       >
-        <PhotoGrid isLoading={isLoading} posts={posts} />
+        <PhotoGrid isLoading={postsQuery.isLoading} posts={postsQuery.data} />
       </InfiniteScroll>
     </div>
   );

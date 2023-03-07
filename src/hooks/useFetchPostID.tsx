@@ -10,6 +10,8 @@ export default function useFetchSinglePost(id: string) {
 
   return useQuery<IPhoto, Error>(["single_post", id], getSinglePost, {
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    staleTime: 6000 * 10,
     enabled: Boolean(id),
   });
 }

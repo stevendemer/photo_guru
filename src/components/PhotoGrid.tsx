@@ -3,6 +3,7 @@ import { IPhoto } from "shared/IPhoto";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { Suspense } from "react";
 import Spinner from "./Spinner";
+import { InfiniteData } from "react-query";
 
 type IProps = {
   posts: IPhoto[];
@@ -12,18 +13,18 @@ type IProps = {
 const PhotoGrid = (props: IProps) => {
   const { posts, isLoading } = props;
 
+  console.log("Posts are ", posts);
+
   return (
     <Suspense fallback={<Spinner />}>
-      <div className="h-full w-full mx-auto">
-        <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 4 }}>
-          <Masonry>
-            {posts.map((post, idx) => (
-              <div key={idx} className="px-2 last:mb-0 last:pb-0">
-                <Image post={post} />
-              </div>
-            ))}
-          </Masonry>
-        </ResponsiveMasonry>
+      <div className="mx-auto max-w-[1960px]">
+        <div className="2xl:columns-4 xl:columns-3 sm:columns-1 gap-4">
+          {posts.map((post: IPhoto, idx: number) => (
+            <div key={post.id}>
+              <Image post={post} />
+            </div>
+          ))}
+        </div>
       </div>
     </Suspense>
   );

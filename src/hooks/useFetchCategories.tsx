@@ -6,7 +6,7 @@ import { topicAtom } from "atoms/topicAtom";
 export default function useFetchCategoryPhotos() {
   const topic = useAtomValue(topicAtom);
 
-  return useInfiniteQuery(
+  return useInfiniteQuery<any, Error>(
     ["categories"],
     async ({ pageParam = 1 }) => {
       const resp = await axios.get(
@@ -23,6 +23,7 @@ export default function useFetchCategoryPhotos() {
       keepPreviousData: false,
       enabled: Boolean(topic),
       onSuccess: (data) => console.log("Data is ", data),
+      onError: (error) => console.log(error),
     }
   );
 }

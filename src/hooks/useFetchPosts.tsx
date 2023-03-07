@@ -2,31 +2,37 @@ import { toast } from "react-toastify";
 import {
   useInfiniteQuery,
   useQueryClient,
-  useQuery,
   InfiniteData,
+  QueryFunctionContext,
 } from "react-query";
 import axios from "../api/axios";
 import { IPhoto } from "../shared/IPhoto";
-import { atomsWithInfiniteQuery } from "jotai-tanstack-query";
-import { atom, useAtom } from "jotai";
+import { useMemo, useCallback } from "react";
 
-export default function useFetchPosts() {
+interface IResult {
+  data: IPhoto[];
+}
+
+export default function useGetInfinitePhotos(key: [string]) {
   return useInfiniteQuery(
-    ["posts"],
+    key,
     async ({ pageParam = 1 }) => {
-      const resp = await axios.get(
-        `photos?page=${pageParam}&per_page=25&order_by=latest`
-      );
+      const { data } = await axios.get(`photos?page=${pageParam}&per_page=25`);
       return {
-        data: resp.data,
+        data,
         nextPage: pageParam + 1,
       };
     },
     {
-      keepPreviousData: false,
+      keepPreviousData: true,
+      retry: false,
+      retryOnMount: false,
       getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
-      select: (data: any) => data?.pages.flatMap((page: any) => page.data),
-      staleTime: 50000,
+      select: useCallback(
+        (data: InfiniteData<IPhoto[]>): IPhoto[] =>
+          data.pages.flatMap((value: any) => value.data),
+        []
+      ),
       onError: (err: Error) =>
         toast.error(`Something went wrong ${err.message}`),
     }

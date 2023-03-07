@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
-import Carousel from "./Carousel";
+import Carousel from "./Navigation";
 import { useAtom } from "jotai";
 import { queryAtom } from "atoms/queryAtom";
 import { themeAtom } from "atoms/themeAtom";
@@ -27,7 +27,7 @@ const Header = () => {
   };
 
   return (
-    <div className="w-full bg-slate-200 drop-shadow-lg dark:bg-gray-800">
+    <div className="w-full bg-slate-200/20 backdrop-blur-xl backdrop-filter bg-clip-padding drop-shadow-lg dark:bg-gray-800">
       <div className="mx-auto py-4 flex  items-center container flex-wrap relative ">
         <div className="sm:text-xl  ml-2 text-xs whitespace-nowrap flex justify-around space-x-4 items-center">
           <Link
