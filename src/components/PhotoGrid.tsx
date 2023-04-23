@@ -13,15 +13,13 @@ type IProps = {
 const PhotoGrid = (props: IProps) => {
   const { posts, isLoading } = props;
 
-  console.log("Posts are ", posts);
-
   return (
     <Suspense fallback={<Spinner />}>
       <div className="mx-auto max-w-[1960px]">
         <div className="2xl:columns-4 xl:columns-3 sm:columns-1 gap-4">
           {posts.map((post: IPhoto, idx: number) => (
-            <div key={post.id}>
-              <Image post={post} />
+            <div key={idx}>
+              <Image key={idx} post={post} />
             </div>
           ))}
         </div>

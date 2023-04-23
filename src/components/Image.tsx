@@ -1,16 +1,17 @@
-import { SyntheticEvent, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useState } from "react";
 import Modal from "./Modal";
 import { IPhoto } from "shared/IPhoto";
 import { debounce } from "lodash";
+import { useNavigate } from "react-router-dom";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import Masonry from "react-responsive-masonry";
 
 const Image = ({ post }: { post: IPhoto }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hovered, setHovered] = useState(false);
+
+  const navigate = useNavigate();
 
   // change brightness and show username after 200ms to avoid flickering
   const debounceHandler = debounce(() => setHovered(true), 100);

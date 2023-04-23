@@ -20,8 +20,8 @@ const Hero = () => {
           alt="hero background"
           className="w-full min-w-[1500px] min-h-[500px] h-full object-cover bg-center brightness-50"
         />
-        <div className="w-full absolute top-20">
-          <div className="font-heading px-4 py-8 mx-auto lg:py-20 text-slate-50 relative min-w-full flex flex-col items-center">
+        <div className="w-full absolute top-5">
+          <div className="font-heading px-4 mx-auto lg:py-10 text-slate-50 relative min-w-full flex flex-col items-center">
             <div className="mt-20">
               <h1 className="w-full mb-2 text-2xl font-heading tracking-tight leading-none lg:text-5xl dark:text-slate-100 whitespace-nowrap">
                 {title}
