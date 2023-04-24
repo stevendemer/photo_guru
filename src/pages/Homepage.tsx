@@ -14,7 +14,7 @@ import { useQuery } from "react-query";
 import { useIntersectionObserver } from "usehooks-ts";
 import { toast } from "react-toastify";
 
-async function fetchData(pageNumber: number): Promise<IPhoto> {
+async function fetchData(pageNumber: number): Promise<IPhoto[]> {
   return (await axios.get(`/photos?page=${pageNumber}&per_page=15`)).data;
 }
 

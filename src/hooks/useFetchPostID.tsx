@@ -13,5 +13,7 @@ export default function useFetchSinglePost(id: string) {
     refetchOnMount: false,
     staleTime: 6000 * 10,
     enabled: Boolean(id),
+    retry: 2,
+    retryDelay: 1000,
   });
 }

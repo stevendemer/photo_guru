@@ -6,7 +6,7 @@ import Spinner from "./Spinner";
 import { InfiniteData } from "react-query";
 
 type IProps = {
-  posts: IPhoto[] | undefined | InfiniteData<IPhoto[]>;
+  posts: IPhoto[] | undefined;
   isLoading: boolean;
 };
 
