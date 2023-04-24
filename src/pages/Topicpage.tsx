@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import PhotoGrid from "components/PhotoGrid";
 import { useQuery, useInfiniteQuery, InfiniteData } from "react-query";
 import { topicAtom } from "atoms/topicAtom";
 import { useAtomValue } from "jotai";
 import { IPhoto } from "shared/IPhoto";
 import { getCategories } from "api/axios";
+import PhotoMasonry from "components/PhotoMasonry";
 
 const Topicpage = () => {
   const topic = useAtomValue(topicAtom);
@@ -24,7 +24,7 @@ const Topicpage = () => {
     }
   );
 
-  console.log("Data from categories", posts);
+  // console.log("Data from categories", posts);
 
   useEffect(() => {
     document.title = "Guru - Topics";
@@ -49,7 +49,7 @@ const Topicpage = () => {
   return (
     <>
       <div className="px-4 py-8 w-full">
-        <PhotoGrid isLoading={isLoading} posts={posts} />
+        <PhotoMasonry isLoading={isLoading} posts={posts} />
       </div>
     </>
   );

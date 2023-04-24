@@ -5,9 +5,10 @@ import { queryAtom } from "atoms/postsAtom";
 import { useAtom } from "jotai";
 import Loader from "components/Spinner";
 import InfiniteScroll from "react-infinite-scroll-component";
-import PhotoGrid from "components/PhotoGrid";
+import PhotoGrid from "components/PhotoMasonry";
 import { useNavigate } from "react-router-dom";
 import ImageSkeleton from "../components/ImageSkeleton";
+import PhotoMasonry from "components/PhotoMasonry";
 
 const Searchpage = () => {
   const {
@@ -46,7 +47,7 @@ const Searchpage = () => {
         dataLength={data?.length}
         next={() => fetchNextPage()}
       >
-        <PhotoGrid posts={data} />
+        <PhotoMasonry posts={data} />
       </InfiniteScroll>
     </div>
   );

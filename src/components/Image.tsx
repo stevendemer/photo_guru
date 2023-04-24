@@ -27,7 +27,7 @@ const Image = ({ post }: { post: IPhoto }) => {
 
   return (
     <div className="py-4 px-2 cursor-pointer transition-all duration-150 delay-75 relative  hover:drop-shadow-2xl shadow-slate-50 hover:scale-105 hover:translate-2 drop-shadow-xl">
-      <div className="container relative">
+      <div className="relative container">
         {hovered && (
           <div className="w-full z-50 absolute left-4 bottom-4 text-slate-50 ">
             {post.user.name}{" "}
@@ -37,10 +37,10 @@ const Image = ({ post }: { post: IPhoto }) => {
           onMouseEnter={debounceHandler}
           onMouseLeave={onMouseLeave}
           onClick={() => setIsOpen(true)}
-          className={`rounded-lg aspect-auto h-full w-full brightness-75 ${
+          className={`rounded-lg aspect-auto h-auto max-w-full brightness-75 ${
             hovered && "brightness-90"
           }`}
-          src={post?.urls?.regular}
+          src={post?.urls?.raw + "&w=400&h=400&fit=crop"}
           alt="photo alt"
           effect="blur"
         />
